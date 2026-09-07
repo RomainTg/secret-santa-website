@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Mon cadeau mystère</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="site-header">
+  <a class="logo" href="#">Mon<span>cadeau</span>mystère</a>
+  <nav>
+    <a href="#trail">Comment ça marche</a>
+    <a href="#form-section">Créer un tirage</a>
+    <a href="#">Idées cadeaux</a>
+    <a href="#">Contact</a>
+  </nav>
+  <div class="burger" id="burger-btn" role="button" aria-label="Ouvrir le menu" aria-expanded="false">
+    <div class="bar"></div>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#trail">Comment ça marche</a>
+    <a href="#form-section">Créer un tirage</a>
+    <a href="#">Idées cadeaux</a>
+    <a href="#">Contact</a>
+  </div>
+</header>
+
+<section class="hero">
+  <svg>
+    <image href="assets/images/snow-hill.jpg" class="snow" alt="" preserveAspectRatio="xMidYMid slice"/>
+  </svg>
+  <div class="snowfall" id="snowfall"></div>
+ 
+  <div class="hero-inner">
+    <div>
+      <h1>Organisez votre <em>Secret Santa</em> sans effort</h1>
+      <p>Créez votre groupe, ajoutez les participants, et laissez la magie faire le reste. Chacun reçoit son destinataire par e-mail, en toute discrétion.</p>
+      <div class="hero-ctas">
+        <a href="#form-section" class="btn btn-primary">Créer mon tirage</a>
+      </div>
+    </div>
+ 
+    <div class="scene">
+      <div class="moon"></div>
+      <div class="moon-mask"></div>
+      <svg viewBox="0 0 640 380" preserveAspectRatio="xMidYMax meet">
+        <circle class="star" cx="90" cy="50" r="2" style="animation-delay:.2s"/>
+        <circle class="star" cx="150" cy="100" r="1.6" style="animation-delay:1.1s"/>
+        <circle class="star" cx="260" cy="40" r="2.2" style="animation-delay:.6s"/>
+        <circle class="star" cx="400" cy="150" r="1.5" style="animation-delay:1.8s"/>
+        <circle class="star" cx="580" cy="180" r="1.8" style="animation-delay:.9s"/>
+        <circle class="star" cx="50" cy="160" r="1.4" style="animation-delay:1.4s"/>
+ 
+      </svg>
+ 
+      <img class="santa" src="assets/images/santa.png" alt="Père Noël et son traîneau tiré par un renne">
+    </div>
+  </div>
+</section>
+
+<section class="trail" id="trail">
+  <div class="trail-head">
+    <h2>Trois étapes avant le grand jour.</h2>
+  </div>
+  <div class="path">
+    <div class="step">
+      <div class="step-dot">1</div>
+      <h3>Invitez les participants</h3>
+      <p>Commencez par créer un groupe et ajoutez les informations de chaque participant, famille, amis ou collègues.</p>
+    </div>
+    <div class="step">
+      <div class="step-dot">2</div>
+      <h3>Le tirage est automatique</h3>
+      <p>L'algorithme évite les doublons et respecte les exclusions et envoie tous les e-mails.</p>
+    </div>
+    <div class="step">
+      <div class="step-dot">3</div>
+      <h3>Chacun reçoit son nom</h3>
+      <p>Un email discret arrive à chaque adresse avec le nom du participant sélectionné, ainsi le secret est préservé.</p>
+    </div>
+  </div>
+</section>
+
+<section class="form-section" id="form-section">
+  <div class="form-wrap">
+    <div class="form-copy">
+      <h2>Un formulaire qui se remplit en douceur</h2>
+      <p>Veillez à ne pas faire d'erreurs quand même :)</p>
+      <div class="progress-track">
+        <span class="done"></span><span class="done"></span><span></span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Étape 2 sur 3</div>
+      <h3>Qui participe ?</h3>
+      <div class="participant-list">
+      <div class="participant-row">
+        <div class="field">
+          <label>Prénom</label>
+          <input type="text" placeholder="Camille">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="text" placeholder="camille@email.com">
+        </div>
+        <div class="field">
+          <label>Exclusion</label>
+          <select>
+            <option>Aucune exclusion</option>
+            <option>Yanis</option>
+            <option>Lina</option>
+          </select>
+        </div>
+      </div>
+      <div class="participant-row">
+        <div class="field no-label">
+          <input type="text" placeholder="Yanis">
+        </div>
+        <div class="field no-label">
+          <input type="text" placeholder="yanis@email.com">
+        </div>
+        <div class="field no-label">
+          <select>
+            <option>Aucune exclusion</option>
+            <option>Camille</option>
+            <option>Lina</option>
+          </select>
+        </div>
+      </div>
+      <div class="participant-row">
+        <div class="field no-label">
+          <input type="text" placeholder="Lina">
+        </div>
+        <div class="field no-label">
+          <input type="text" placeholder="lina@email.com">
+        </div>
+        <div class="field no-label">
+          <select>
+            <option>Aucune exclusion</option>
+            <option>Camille</option>
+            <option>Yanis</option>
+          </select>
+        </div>
+      </div>
+      </div>
+      <div class="btn btn-primary btn-add">Ajouter un participant</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <a class="logo" href="#">Mon<span>cadeau</span>mystère</a>
+    <div class="footer-links">
+      <a href="#">Mentions légales</a>
+      <a href="#">Politique de confidentialité</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-rule"></div>
+  <div class="footer-bottom">
+    <span>Fait avec un peu d'amour et beaucoup de code.</span>
+    <span>© 2026 - Tous droits réservés</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
