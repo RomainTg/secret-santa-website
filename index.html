@@ -90,64 +90,90 @@
     <div class="form-copy">
       <h2>Un formulaire qui se remplit en douceur</h2>
       <p>Veillez à ne pas faire d'erreurs quand même :)</p>
-      <div class="progress-track">
-        <span class="done"></span><span class="done"></span><span></span>
+      <div class="progress-track" id="progress-track">
+        <span></span><span></span><span></span>
       </div>
     </div>
     <div class="card">
-      <div class="card-eyebrow">Étape 2 sur 3</div>
-      <h3>Qui participe ?</h3>
-      <div class="participant-list">
-      <div class="participant-row">
+      <button class="retour" id="retour" aria-label="Étape précédente" type="button">←</button>
+      <div class="etape" id="etape">Étape 1 sur 3</div>
+      <div class="recap-info">
+        <h3 id="group-name-title"></h3>
+        <h3 id="budget-title"></h3>
+      </div>
+
+      <div class="step-panel active" data-step="1">
+        <h3>Comment s'appelle votre groupe ?</h3>
         <div class="field">
-          <label>Prénom</label>
-          <input type="text" placeholder="Camille">
+          <input type="text" id="group-name-input" placeholder="Ex : Noël en famille">
         </div>
+        <div class="btn btn-primary step-next" data-step-next="1">Continuer</div>
+      </div>
+
+      <div class="step-panel" data-step="2">
+        <h3>Quel est le budget par cadeau ?</h3>
         <div class="field">
-          <label>Email</label>
-          <input type="text" placeholder="camille@email.com">
+          <input type="text" id="group-budget" placeholder="Ex : 20€">
         </div>
-        <div class="field">
-          <label>Exclusion</label>
-          <select>
-            <option>Aucune exclusion</option>
-            <option>Yanis</option>
-            <option>Lina</option>
-          </select>
+        <div id="budgetSuggestions" hidden>
+          <button type="button" class="suggestion-budget" data-value="5">5€</button>
+          <button type="button" class="suggestion-budget" data-value="10">10€</button>
+          <button type="button" class="suggestion-budget" data-value="15">15€</button>
+          <button type="button" class="suggestion-budget" data-value="20">20€</button>
         </div>
+        <div class="btn btn-primary step-next" data-step-next="2">Continuer</div>
       </div>
-      <div class="participant-row">
-        <div class="field no-label">
-          <input type="text" placeholder="Yanis">
+
+      <div class="step-panel" data-step="3">
+        <h3>Qui participe ?</h3>
+        <div class="participant-list" id="participant-list">
+          <div class="participant-row">
+            <div class="field">
+              <label>Prénom</label>
+              <input type="text" class="participant-name" placeholder="Camille">
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="text" class="participant-email" placeholder="camille@email.com">
+            </div>
+            <div class="field">
+              <label>Exclusion</label>
+              <select class="participant-exclusion">
+                <option>Aucune exclusion</option>
+              </select>
+            </div>
+          </div>
+          <div class="participant-row">
+            <div class="field no-label">
+              <input type="text" class="participant-name" placeholder="Yanis">
+            </div>
+            <div class="field no-label">
+              <input type="text" class="participant-email" placeholder="yanis@email.com">
+            </div>
+            <div class="field no-label">
+              <select class="participant-exclusion">
+                <option>Aucune exclusion</option>
+              </select>
+            </div>
+          </div>
+          <div class="participant-row">
+            <div class="field no-label">
+              <input type="text" class="participant-name" placeholder="Lina">
+            </div>
+            <div class="field no-label">
+              <input type="text" class="participant-email" placeholder="lina@email.com">
+            </div>
+            <div class="field no-label">
+              <select class="participant-exclusion">
+                <option>Aucune exclusion</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div class="field no-label">
-          <input type="text" placeholder="yanis@email.com">
-        </div>
-        <div class="field no-label">
-          <select>
-            <option>Aucune exclusion</option>
-            <option>Camille</option>
-            <option>Lina</option>
-          </select>
-        </div>
+        <div class="btn btn-primary btn-add" id="add-participant">Ajouter un participant</div>
+        <div class="btn btn-primary" id="launch-draw">Lancer le tirage</div>
       </div>
-      <div class="participant-row">
-        <div class="field no-label">
-          <input type="text" placeholder="Lina">
-        </div>
-        <div class="field no-label">
-          <input type="text" placeholder="lina@email.com">
-        </div>
-        <div class="field no-label">
-          <select>
-            <option>Aucune exclusion</option>
-            <option>Camille</option>
-            <option>Yanis</option>
-          </select>
-        </div>
-      </div>
-      </div>
-      <div class="btn btn-primary btn-add">Ajouter un participant</div>
+
     </div>
 
   </div>
@@ -164,7 +190,7 @@
   </div>
   <div class="footer-rule"></div>
   <div class="footer-bottom">
-    <span>Fait avec un peu d'amour et beaucoup de code.</span>
+    <span>Site réalisé avec beaucoup d'amour et un soupçon de code :)</span>
     <span>© 2026 - Tous droits réservés</span>
   </div>
 </footer>
