@@ -565,16 +565,16 @@ header.open .mobile-nav {
 
 .retour {
     position:absolute;
-    top:24px;
-    right:24px;
-    width:36px;
-    height:36px;
+    top:38px;
+    right:32px;
+    width:38px;
+    height:38px;
     border-radius:50%;
-    border:1px solid #E3DFD4;
+    border:1px solid #d8d4ca;
     background:var(--snow);
     color:var(--ink-soft);
-    font-size:16px;
-    line-height:1;
+    font-size:18px;
+    line-height:1.1;
     cursor:pointer;
     display:flex;
     align-items:center;
@@ -643,6 +643,28 @@ header.open .mobile-nav {
   cursor: pointer;
 }
 
+.remove-participant {
+    margin-top:4px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+    color:var(--berry);
+    padding:3px 9px;
+    border-radius:8px;
+    transition:background .15s ease, color .15s ease;
+}
+
+.remove-icon {
+    font-size:18px;
+    vertical-align:baseline;
+}
+
+.remove-participant:hover {
+    background:#F3E5E0;
+    color:var(--berry);
+}
+
 .card .step-next {
     width:100%;
     justify-content:center;
@@ -699,6 +721,135 @@ footer {
     color:#7E8F86;
     flex-wrap:wrap; 
     gap:10px;
+}
+
+/* ---------- PAGE MENTIONS LÉGALES---------- */
+
+.mentionBanner {
+    background:var(--pine);
+    color:var(--birch);
+    padding:56px 6% 48px;
+    text-align:center;
+}
+
+.mentionBanner h1 {
+    color:var(--snow);
+    font-size:36px;
+}
+
+.mentionBanner p {
+    color:#D7DFD9;
+    margin-top:10px;
+    font-size:15px;
+}
+
+.mentionContent {
+    max-width:90%;
+    margin:0 auto;
+    padding:64px 6% 96px;
+}
+
+.mentionContent h2 {
+    font-size:22px;
+    margin-top:40px;
+    margin-bottom:14px;
+}
+
+.mentionContent h2:first-child {
+    margin-top:0;
+}
+
+.mentionContent p {
+    color:var(--ink-soft);
+    font-size:15px;
+    margin-bottom:14px;
+}
+
+.mentionContent ul {
+    color:var(--ink-soft);
+    font-size:15px;
+    margin:0 0 14px 20px;
+}
+
+.mentionContent li {
+    margin-bottom:8px;
+}
+
+.mentionContent a {
+    color:var(--berry);
+    text-decoration:underline;
+}
+
+.mentionContent strong {
+    color:var(--ink);
+}
+
+.legal-updated {
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:48px;
+    font-style:italic;
+}
+
+/* -------------- PAGE POLITIQUE DE CONFIDENTIALITÉ -------------- */
+
+.policyBanner {
+    background:var(--pine);
+    color:var(--birch);
+    padding:56px 6% 48px;
+    text-align:center;
+}
+
+.policyBanner h1 {
+    color:var(--snow);
+    font-size:36px;
+}
+
+.policyBanner p {
+    color:#D7DFD9;
+    margin-top:10px;
+    font-size:15px;
+}
+
+.policyContent {
+    max-width:90%;
+    margin:0 auto;
+    padding:64px 6% 96px;
+}
+
+.policyContent h2 {
+    font-size:22px;
+    margin-top:40px;
+    margin-bottom:14px;
+}
+
+.policyContent h2:first-child {
+    margin-top:0;
+}
+
+.policyContent p {
+    color:var(--ink-soft);
+    font-size:15px;
+    margin-bottom:14px;
+}
+
+.policyContent ul {
+    color:var(--ink-soft);
+    font-size:15px;
+    margin:0 0 14px 20px;
+}
+
+.policyContent li {
+    margin-bottom:8px;
+}
+
+.policyContent a {
+    color:var(--berry);
+    text-decoration:underline;
+}
+
+.policyContent strong {
+    color:var(--ink);
 }
 
 

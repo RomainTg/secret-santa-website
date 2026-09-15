@@ -170,10 +170,20 @@ addParticipantBtn.addEventListener('click', () => {
       <select class="participant-exclusion">
         <option>Aucune exclusion</option>
       </select>
+      <button type="button" class="remove-participant" aria-label="Supprimer ce participant">
+        <span class="remove-icon">🗑</span> Supprimer
+      </button>
     </div>
   `;
   participantList.appendChild(row);
   updateExclusionOptions();
+});
+
+participantList.addEventListener('click', (e) => {
+  if (e.target.classList.contains('remove-participant')) {
+    e.target.closest('.participant-row').remove();
+    updateExclusionOptions();
+  }
 });
 
 /* ---------- TIRAGE AU SORT ---------- */
