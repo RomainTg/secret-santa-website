@@ -553,7 +553,7 @@ header.open .mobile-nav {
     margin-right:auto;
 }
 
-/* ---------- FORM WIZARD (steps) ---------- */
+/* ---------- FORM WIZARD  ---------- */
 
 .step-panel {
     display:none;
@@ -666,8 +666,47 @@ header.open .mobile-nav {
 }
 
 .card .step-next {
+    display:flex;
+    width:50%;
+    justify-content:center;
+    margin:24px auto 0;
+}
+
+.participant-actions {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:18px;
+}
+
+.import-excel {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    gap:2px;
+    margin-top:16px;
+}
+
+.btn-import {
+    background:transparent;
+    color:var(--pine);
+    border:1px solid var(--pine);
     width:100%;
     justify-content:center;
+}
+
+.btn-import:hover {
+    background:var(--birch);
+}
+
+.import-link {
+    font-style:italic;
+    font-size:14px;
+    color:var(--pine);
+    text-decoration:underline;
+    opacity:0.8;
 }
 
 #launch-draw {
@@ -933,8 +972,15 @@ footer {
     width: 60%;
 }
 
+.import-excel {
+    width: 60%;
 }
 
+.step-next {
+    width: 60%;
+}
+
+}
 
 /* TABLETTE PORTRAIT */
 @media (min-width: 768px) {
@@ -983,8 +1029,17 @@ footer {
 .card .btn-add {
     width: 50%;
 }
-  
+
+.import-excel {
+    width: 50%;
 }
+
+.step-next {
+    width: 50%;
+}
+
+}
+
 
 
 
@@ -1034,6 +1089,26 @@ nav {display:flex;}
     height:auto;
     z-index:2; 
     pointer-events:none;
+}
+
+.participant-actions {
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:16px;
+}
+
+.card .btn-add {
+    width:50%;
+}
+
+.import-excel {
+    flex-direction:column;
+    width:30%;
+}
+
+.step-next {
+    width:50%;
 }
 
 }

@@ -170,7 +170,14 @@
             </div>
           </div>
         </div>
-        <div class="btn btn-primary btn-add" id="add-participant">Ajouter un participant</div>
+        <div class="participant-actions">
+          <div class="btn btn-primary btn-add" id="add-participant">Ajouter un participant</div>
+          <div class="import-excel">
+            <label for="excel-import" class="btn btn-import">Importer un fichier Excel</label>
+            <input type="file" id="excel-import" accept=".xlsx" hidden>
+            <a href="assets/modele-participants.xlsx" download class="import-link">Télécharger le modèle</a>
+          </div>
+        </div>
         <div class="btn btn-primary" id="launch-draw">Lancer le tirage</div>
       </div>
 
@@ -195,6 +202,7 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="script.js"></script>
 
 </body>

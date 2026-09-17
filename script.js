@@ -156,34 +156,29 @@ participantList.addEventListener('input', (e) => {
   }
 });
 
-addParticipantBtn.addEventListener('click', () => {
+function createParticipantRow(name = '', email = '', exclusion = '') {
   const row = document.createElement('div');
   row.className = 'participant-row';
   row.innerHTML = `
     <div class="field no-label">
-      <input type="text" class="participant-name" placeholder="Prénom">
+      <input type="text" class="participant-name" placeholder="Prénom" value="${name}">
     </div>
     <div class="field no-label">
-      <input type="text" class="participant-email" placeholder="email@exemple.com">
+      <input type="text" class="participant-email" placeholder="email@exemple.com" value="${email}">
     </div>
     <div class="field no-label">
       <select class="participant-exclusion">
         <option>Aucune exclusion</option>
       </select>
-      <button type="button" class="remove-participant" aria-label="Supprimer ce participant">
-        <span class="remove-icon">🗑</span> Supprimer
-      </button>
     </div>
+    <button type="button" class="remove-participant" aria-label="Supprimer ce participant"><span class="remove-icon">🗑</span> Supprimer</button>
   `;
-  participantList.appendChild(row);
-  updateExclusionOptions();
-});
+  return row;
+}
 
-participantList.addEventListener('click', (e) => {
-  if (e.target.classList.contains('remove-participant')) {
-    e.target.closest('.participant-row').remove();
-    updateExclusionOptions();
-  }
+addParticipantBtn.addEventListener('click', () => {
+  participantList.appendChild(createParticipantRow());
+  updateExclusionOptions();
 });
 
 /* ---------- TIRAGE AU SORT ---------- */
