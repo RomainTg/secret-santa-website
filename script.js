@@ -36,9 +36,11 @@ for(let i=0;i<24;i++) {
   box.appendChild(f);
 }
 
+
 /* =========================================
    FORMULAIRE EN 3 ÉTAPES (NOM DU GROUPE, BUDGET, PARTICIPANTS)
 ========================================= */
+
 
 const totalSteps = 3;
 let currentStep = 1;
@@ -110,7 +112,9 @@ budgetInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
 });
 
+
 /* ---------- BUDGET ---------- */
+
 
 const suggestionButtons = document.querySelectorAll('.suggestion-budget');
 
@@ -122,6 +126,7 @@ suggestionButtons.forEach((button) => {
 
 
 /* ---------- PARTICIPANTS ---------- */
+
 
 const participantList = document.getElementById('participant-list');
 const addParticipantBtn = document.getElementById('add-participant');
@@ -156,7 +161,7 @@ participantList.addEventListener('input', (e) => {
   }
 });
 
-function createParticipantRow(name = '', email = '', exclusion = '') {
+function createParticipantRow(name = '', email = '', exclusion = '', removable = true) {
   const row = document.createElement('div');
   row.className = 'participant-row';
   row.innerHTML = `
@@ -171,7 +176,7 @@ function createParticipantRow(name = '', email = '', exclusion = '') {
         <option>Aucune exclusion</option>
       </select>
     </div>
-    <button type="button" class="remove-participant" aria-label="Supprimer ce participant"><span class="remove-icon">🗑</span> Supprimer</button>
+    ${removable ? '<button type="button" class="remove-participant" aria-label="Supprimer ce participant"><span class="remove-icon">🗑</span> Supprimer</button>' : ''}
   `;
   return row;
 }
@@ -181,7 +186,65 @@ addParticipantBtn.addEventListener('click', () => {
   updateExclusionOptions();
 });
 
+participantList.addEventListener('click', (e) => {
+  const removeBtn = e.target.closest('.remove-participant');
+  if (removeBtn) {
+    removeBtn.closest('.participant-row').remove();
+    updateExclusionOptions();
+  }
+});
+
+const excelImportInput = document.getElementById('excel-import');
+
+excelImportInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const data = await file.arrayBuffer();
+  const workbook = XLSX.read(data, { type: 'array' });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet);
+
+  importParticipants(rows);
+  excelImportInput.value = '';
+});
+
+
+function importParticipants(rows) {
+  const excelData = Array.from(participantList.querySelectorAll('.participant-name'))
+    .some((input) => input.value.trim() !== '');
+
+  if (excelData) {
+    const replace = confirm('Vous avez déjà des participants saisis. Remplacer par le fichier importé ?');
+    if (replace) participantList.innerHTML = '';
+  } else {
+    participantList.innerHTML = '';
+  }
+
+  let currentCount = participantList.querySelectorAll('.participant-row').length;
+
+  rows.forEach((row, index) => {
+    const name = (row['Prénom'] || '').toString().trim();
+    const email = (row['Email'] || '').toString().trim();
+    if (!name || !email) return;
+
+    participantList.appendChild(createParticipantRow(name, email, '', currentCount >= 3));
+    currentCount++;
+  });
+
+  updateExclusionOptions();
+
+  rows.forEach((row, index) => {
+    const exclusion = (row['Exclusion'] || '').toString().trim();
+    if (!exclusion) return;
+    const select = participantList.querySelectorAll('.participant-exclusion')[index];
+    if (select) select.value = exclusion;
+  });
+}
+
+
 /* ---------- TIRAGE AU SORT ---------- */
+
 
 function getParticipants() {
   return Array.from(participantList.querySelectorAll('.participant-row')).map((row) => ({
