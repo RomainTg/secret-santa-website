@@ -104,6 +104,8 @@ document.querySelectorAll('.step-next').forEach((btn) => {
   btn.addEventListener('click', nextStep);
 });
 
+document.getElementById('launch-draw').addEventListener('click', launchDraw);
+
 groupNameInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
 });
@@ -273,7 +275,7 @@ function computeDraw(participants) {
   return null;
 }
 
-function launchDraw() {
+async function launchDraw() {
   const participants = getParticipants();
 
   if (participants.length < 3) {
@@ -288,9 +290,28 @@ function launchDraw() {
     return;
   }
 
-  // TODO : brancher l'envoi des emails une fois le service choisi (Netlify Functions, EmailJS...)
-  console.log('Tirage réalisé :', draw);
-  alert('Tirage réalisé ! (voir la console pour le résultat — l\'envoi des emails arrive bientôt)');
+try {
+    const response = await fetch('/.netlify/functions/send-emails', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        draw,
+        participants,
+        groupName: groupNameInput.value.trim(),
+        budget: budgetInput.value.trim(),
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert('Tirage réalisé ! Chaque participant va recevoir son email.');
+    } else {
+      alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Réessayez.");
+    }
+  } catch (error) {
+    alert("Impossible de contacter le serveur d'envoi. Vérifie ta connexion et réessaie.");
+  }
 }
 
 showStep(1);
