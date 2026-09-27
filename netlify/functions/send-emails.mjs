@@ -16,15 +16,17 @@ export default async (req) => {
           to: [{ email: giver.email, name: giverName }],
           subject: `🎁 Ton tirage pour : ${groupName}`,
           htmlContent: `
-            <div style="background:#1B3A2F; padding:32px 24px; text-align:center; border-radius:12px 12px 0 0;">
-              <p style="margin:0; font-family:Georgia, serif; font-size:22px; color:#FAF9F5;">🎁 Mon cadeau mystère</p>
+            <div style="background:#FAF9F5; padding:32px 24px; text-align:center; border-radius:12px 12px 0 0; border-bottom:1px solid #E4DDCB;">
+              <p style="margin:0; font-family:Georgia, serif; font-size:22px;">
+                <span style="color:#122720;">Mon</span><span style="color:#C4432B;">cadeau</span><span style="color:#122720;">mystère</span>🎁
+              </p>
             </div>
             <div style="background:#FAF9F5; padding:32px 24px; border-radius:0 0 12px 12px; font-family:Arial, sans-serif; color:#14231C;">
               <p style="font-size:16px; margin:0 0 16px;">Bonjour ${giverName},</p>
               <p style="font-size:15px; line-height:1.6; margin:0 0 20px; color:#4A5B52;">
                 Le tirage au sort du groupe <strong>${groupName}</strong> a été réalisé. Tu dois offrir un cadeau à :
               </p>
-              <div style="background:#C4432B; color:#FAF9F5; font-family:Georgia, serif; font-size:20px; text-align:center; padding:16px; border-radius:8px; margin:0 0 20px;">
+              <div style="background:#C4432B; color:#FAF9F5; font-family:Georgia, serif; font-size:18px; text-align:center; padding:14px; border-radius:10px; margin:0 0 20px;">
                 ${receiverName}
               </div>
               <p style="font-size:14px; color:#4A5B52; margin:0 0 8px;">Budget suggéré :</p>
