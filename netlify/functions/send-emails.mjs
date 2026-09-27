@@ -1,51 +1,81 @@
 export default async (req) => {
   try {
-    const { draw, participants, groupName, budget } = await req.json();
+    const { draw, participants, groupName, budget, antibot } = await req.json();
 
-    const emailPromises = Object.entries(draw).map(([giverName, receiverName]) => {
-      const giver = participants.find((p) => p.name === giverName);
+    if (antibot && antibot.trim() !== '') {
+      return new Response(JSON.stringify({ success: true, sent: 0, total: 0 }), { status: 200 });
+    }
 
-      return fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-          'api-key': process.env.BREVO_API_KEY,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sender: { email: 'tangromain@yahoo.com', name: 'Mon cadeau mystère' },
-          to: [{ email: giver.email, name: giverName }],
-          subject: `🎁 Ton tirage pour : ${groupName}`,
-          htmlContent: `
-            <div style="background:#FAF9F5; padding:32px 24px; text-align:center; border-radius:12px 12px 0 0; border-bottom:1px solid #E4DDCB;">
-              <p style="margin:0; font-family:Georgia, serif; font-size:22px;">
-                <span style="color:#122720; font-weight:bold;">Mon</span><span style="color:#C4432B; font-weight:bold;">cadeau</span><span style="color:#122720; font-weight:bold;">mystère</span>
-              </p>
+    if (!draw || !participants || !Array.isArray(participants) || participants.length < 3) {
+      return new Response(JSON.stringify({ success: false, error: 'Données invalides' }), { status: 400 });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const hasInvalidEmail = participants.some((p) => !emailRegex.test(p.email));
+
+    if (hasInvalidEmail) {
+      return new Response(JSON.stringify({ success: false, error: 'Email invalide détecté' }), { status: 400 });
+    }
+
+    const emailResults = await Promise.allSettled(
+    Object.entries(draw).map(async ([giverName, receiverName]) => {
+    const giver = participants.find((p) => p.name === giverName);
+
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: { email: 'tangromain@yahoo.com', name: 'Mon cadeau mystère' },
+        to: [{ email: giver.email, name: giverName }],
+        subject: `🎁 Ton tirage pour : ${groupName}`,
+        htmlContent: `
+          <div style="background:#FAF9F5; padding:32px 24px; text-align:center; border-radius:12px 12px 0 0; border-bottom:1px solid #E4DDCB;">
+            <p style="margin:0; font-family:Georgia, serif; font-size:22px;">
+              <span style="color:#122720; font-weight:bold;">Mon</span><span style="color:#C4432B; font-weight:bold;">cadeau</span><span style="color:#122720; font-weight:bold;">mystère</span>
+            </p>
+          </div>
+          <div style="background:#FAF9F5; padding:32px 24px; border-radius:0 0 12px 12px; font-family:Arial, sans-serif; color:#14231C;">
+            <p style="font-size:16px; margin:0 0 16px;">Bonjour ${giverName},</p>
+            <p style="font-size:15px; line-height:1.6; margin:0 0 20px; color:#4A5B52;">
+              Le tirage au sort du groupe <strong>${groupName}</strong> a été réalisé. Tu dois offrir un cadeau à :
+            </p>
+            <div style="background:#C4432B; color:#FAF9F5; font-family:Georgia, serif; font-size:18px; text-align:center; padding:14px; border-radius:10px; margin:0 0 20px;">
+              ${receiverName}
             </div>
-            <div style="background:#FAF9F5; padding:32px 24px; border-radius:0 0 12px 12px; font-family:Arial, sans-serif; color:#14231C;">
-              <p style="font-size:16px; margin:0 0 16px;">Bonjour ${giverName},</p>
-              <p style="font-size:15px; line-height:1.6; margin:0 0 20px; color:#4A5B52;">
-                Le tirage au sort du groupe <strong>${groupName}</strong> a été réalisé. Tu dois offrir un cadeau à :
-              </p>
-              <div style="background:#C4432B; color:#FAF9F5; font-family:Georgia, serif; font-size:18px; text-align:center; padding:14px; border-radius:10px; margin:0 0 20px;">
-                ${receiverName}
-              </div>
-              <p style="font-size:14px; color:#4A5B52; margin:0 0 8px;">Budget suggéré :</p>
-              <p style="display:inline-block; background:#F1EAD9; color:#14231C; font-size:14px; padding:6px 14px; border-radius:100px; margin:0 0 24px;">
-                ${budget}€
-              </p>
-              <p style="font-size:13px; color:#4A5B52; line-height:1.6; margin:24px 0 0;">
-                Chuuut, c'est un secret... 🤫
-              </p>
-            </div>
-          `,
-          textContent: `Bonjour ${giverName},\n\nLe tirage au sort du groupe ${groupName} a été réalisé. Tu dois offrir un cadeau à : ${receiverName}\n\nBudget suggéré : ${budget}€\n\nChuuut, c'est un secret... 🤫`,
-        }),
-      });
+            <p style="font-size:14px; color:#4A5B52; margin:0 0 8px;">Budget suggéré :</p>
+            <p style="display:inline-block; background:#F1EAD9; color:#14231C; font-size:14px; padding:6px 14px; border-radius:100px; margin:0 0 24px;">
+              ${budget}€
+            </p>
+            <p style="font-size:13px; color:#4A5B52; line-height:1.6; margin:24px 0 0;">
+              Chuuut, c'est un secret... 🤫
+            </p>
+          </div>
+        `,
+        textContent: `Bonjour ${giverName},\n\nLe tirage au sort du groupe ${groupName} a été réalisé. Tu dois offrir un cadeau à : ${receiverName}\n\nBudget suggéré : ${budget}€\n\nChuuut, c'est un secret... 🤫`,
+      }),
     });
 
-    await Promise.all(emailPromises);
+    if (!response.ok) throw new Error(giverName);
+    return giverName;
+  })
+);
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+const failedNames = emailResults
+  .filter((r) => r.status === 'rejected')
+  .map((r) => r.reason.message);
+
+return new Response(
+  JSON.stringify({
+    success: failedNames.length === 0,
+    sent: emailResults.length - failedNames.length,
+    total: emailResults.length,
+    failedNames,
+  }),
+  { status: 200 }
+); 
   } catch (error) {
     return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500 });
   }

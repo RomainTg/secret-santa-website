@@ -126,6 +126,7 @@
       <div class="step-panel" data-step="3">
         <h3>Qui participe ?</h3>
         <div class="participant-list" id="participant-list">
+          <input type="text" id="antibot" name="antibot" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px;">
           <div class="participant-row">
             <div class="field">
               <label>Prénom</label>
@@ -133,7 +134,7 @@
             </div>
             <div class="field">
               <label>Email</label>
-              <input type="text" class="participant-email" placeholder="camille@email.com">
+              <input type="email" class="participant-email" placeholder="camille@email.com">
             </div>
             <div class="field">
               <label>Exclusion</label>
@@ -147,7 +148,7 @@
               <input type="text" class="participant-name" placeholder="Yanis">
             </div>
             <div class="field no-label">
-              <input type="text" class="participant-email" placeholder="yanis@email.com">
+              <input type="email" class="participant-email" placeholder="yanis@email.com">
             </div>
             <div class="field no-label">
               <select class="participant-exclusion">
@@ -160,7 +161,7 @@
               <input type="text" class="participant-name" placeholder="Lina">
             </div>
             <div class="field no-label">
-              <input type="text" class="participant-email" placeholder="lina@email.com">
+              <input type="email" class="participant-email" placeholder="lina@email.com">
             </div>
             <div class="field no-label">
               <select class="participant-exclusion">
@@ -203,10 +204,11 @@
 
 <div class="popUp" id="popupModal" hidden>
   <div class="modal-card">
-    <h3>🎉 Tirage réalisé !</h3>
-    <p>Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.</p>
+    <h3 id="modal-title">🎉 Tirage réalisé !</h3>
+    <p id="modal-message">Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.</p>
     <div class="modal-actions">
       <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+      <button type="button" class="btn-close-modal" id="modal-close-btn" hidden>Fermer et corriger</button>
       <a href="#" target="_blank" rel="noopener" class="modal-donate-link">Envie de soutenir le projet ? Faites un don</a>
     </div>
   </div>

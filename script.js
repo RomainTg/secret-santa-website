@@ -2,7 +2,9 @@ const header = document.getElementById('site-header');
 const burgerBtn = document.getElementById('burger-btn');
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
+const launchDrawBtn = document.getElementById('launch-draw');
 const drawModal = document.getElementById('popupModal');
+const modalCloseBtn = document.getElementById('modal-close-btn');
 
 burgerBtn.addEventListener('click', () => {
   const isOpen = header.classList.toggle('open');
@@ -113,6 +115,10 @@ groupNameInput.addEventListener('keydown', (e) => {
 
 budgetInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
+});
+
+modalCloseBtn.addEventListener('click', () => {
+  drawModal.hidden = true;
 });
 
 
@@ -278,6 +284,14 @@ function computeDraw(participants) {
 
 async function launchDraw() {
   const participants = getParticipants();
+  const invalidEmails = Array.from(participantList.querySelectorAll('.participant-email'))
+    .filter((input) => input.value.trim() && !input.checkValidity());
+
+  if (invalidEmails.length > 0) {
+    alert('Une ou plusieurs adresses email ne sont pas valides. Merci de les corriger.');
+    invalidEmails[0].focus();
+    return;
+  }
 
   if (participants.length < 3) {
     alert('Il faut au moins 3 participants pour lancer le tirage.');
@@ -291,6 +305,10 @@ async function launchDraw() {
     return;
   }
 
+  launchDrawBtn.disabled = true;
+  const originalText = launchDrawBtn.textContent;
+  launchDrawBtn.textContent = 'Tirage en cours...';
+
 try {
     const response = await fetch('/.netlify/functions/send-emails', {
       method: 'POST',
@@ -300,18 +318,29 @@ try {
         participants,
         groupName: groupNameInput.value.trim(),
         budget: budgetInput.value.trim(),
+        antibot: document.getElementById('antibot').value,
       }),
     });
 
     const result = await response.json();
 
-    if (result.success) {
-      popupModal.hidden = false;
+    if (result.sent === result.total) {
+      document.getElementById('modal-title').textContent = '🎉 Tirage réalisé !';
+      document.getElementById('modal-message').textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
+      drawModal.hidden = false;
+    } else if (result.sent > 0) {
+      document.getElementById('modal-title').textContent = '⚠️ Tirage envoyé partiellement';
+      document.getElementById('modal-message').textContent = `${result.sent} email(s) sur ${result.total} ont bien été envoyés. Vérifiez les adresses des participants manquants.`;
+      modalCloseBtn.hidden = false;
+      drawModal.hidden = false;
     } else {
       alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Veuillez réessayer.");
     }
   } catch (error) {
     alert("Impossible de contacter le serveur d'envoi. Veuillez vérifier votre connexion et réessayez.");
+  } finally {
+    launchDrawBtn.disabled = false;
+    launchDrawBtn.textContent = originalText;
   }
 }
 
