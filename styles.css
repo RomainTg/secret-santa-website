@@ -762,6 +762,62 @@ footer {
     gap:10px;
 }
 
+/*----------- POP UP DONATE -----------*/
+
+.popUp {
+    position:fixed;
+    inset:0;
+    background:rgba(18, 39, 32, 0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+}
+
+.popUp[hidden] {
+    display:none;
+}
+
+.modal-card {
+    background:var(--snow);
+    border-radius:20px;
+    padding:36px;
+    width:100%;
+    max-width:420px;
+    max-height:90vh;
+    overflow-y:auto;
+    text-align:center;
+    box-shadow:0 24px 48px -24px rgba(20,35,28,0.35);
+}
+
+.modal-card h3 {
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+.modal-card p {
+    color:var(--ink-soft);
+    font-size:15px;
+    margin-bottom:24px;
+}
+
+.modal-actions {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.modal-actions .btn {
+    justify-content:center;
+}
+
+.modal-donate-link {
+    font-size:13px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+}
+
 /* ---------- PAGE MENTIONS LÉGALES---------- */
 
 .mentionBanner {

@@ -2,6 +2,7 @@ const header = document.getElementById('site-header');
 const burgerBtn = document.getElementById('burger-btn');
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
+const drawModal = document.getElementById('popupModal');
 
 burgerBtn.addEventListener('click', () => {
   const isOpen = header.classList.toggle('open');
@@ -286,7 +287,7 @@ async function launchDraw() {
   const draw = computeDraw(participants);
 
   if (!draw) {
-    alert("Impossible de trouver un tirage valide avec ces exclusions. Essayez d'en retirer une.");
+    alert("Impossible de trouver un tirage valide avec les exclusions actuelles. Veuillez tenter d'en retirer une.");
     return;
   }
 
@@ -305,12 +306,12 @@ try {
     const result = await response.json();
 
     if (result.success) {
-      alert('Tirage réalisé ! Chaque participant va recevoir son email.');
+      popupModal.hidden = false;
     } else {
-      alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Réessayez.");
+      alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Veuillez réessayer.");
     }
   } catch (error) {
-    alert("Impossible de contacter le serveur d'envoi. Vérifie ta connexion et réessaie.");
+    alert("Impossible de contacter le serveur d'envoi. Veuillez vérifier votre connexion et réessayez.");
   }
 }
 
