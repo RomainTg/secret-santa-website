@@ -18,7 +18,7 @@ export default async (req) => {
           htmlContent: `
             <div style="background:#FAF9F5; padding:32px 24px; text-align:center; border-radius:12px 12px 0 0; border-bottom:1px solid #E4DDCB;">
               <p style="margin:0; font-family:Georgia, serif; font-size:22px;">
-                <span style="color:#122720;">Mon</span><span style="color:#C4432B;">cadeau</span><span style="color:#122720;">mystère</span>🎁
+                <span style="color:#122720; font-weight:bold;">Mon</span><span style="color:#C4432B; font-weight:bold;">cadeau</span><span style="color:#122720; font-weight:bold;">mystère</span>
               </p>
             </div>
             <div style="background:#FAF9F5; padding:32px 24px; border-radius:0 0 12px 12px; font-family:Arial, sans-serif; color:#14231C;">
