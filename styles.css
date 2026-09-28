@@ -722,6 +722,18 @@ header.open .mobile-nav {
     pointer-events:none;
 }
 
+#confirm-cancel-btn {
+    border: none;
+    background:#e5e6e6;
+    font-family:'Inter', sans-serif;
+}
+
+#confirm-send-btn {
+    border: none;
+    font-family:'Inter', sans-serif;
+}
+
+
 /* ---------- FOOTER ---------- */
   
 footer {
