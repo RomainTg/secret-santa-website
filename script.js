@@ -5,6 +5,9 @@ const budgetInput = document.getElementById('group-budget');
 const launchDrawBtn = document.getElementById('launch-draw');
 const drawModal = document.getElementById('popupModal');
 const modalCloseBtn = document.getElementById('modal-close-btn');
+const confirmModal = document.getElementById('confirmModal');
+const confirmSendBtn = document.getElementById('confirm-send-btn');
+const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
 
 burgerBtn.addEventListener('click', () => {
   const isOpen = header.classList.toggle('open');
@@ -107,7 +110,10 @@ document.querySelectorAll('.step-next').forEach((btn) => {
   btn.addEventListener('click', nextStep);
 });
 
-document.getElementById('launch-draw').addEventListener('click', launchDraw);
+launchDrawBtn.addEventListener('click', () => {
+  confirmModal.hidden = false;
+  confirmSendBtn.focus();
+});
 
 groupNameInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
@@ -117,8 +123,60 @@ budgetInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); nextStep(); }
 });
 
+confirmCancelBtn.addEventListener('click', () => {
+  confirmModal.hidden = true;
+  launchDrawBtn.focus();
+});
+
 modalCloseBtn.addEventListener('click', () => {
   drawModal.hidden = true;
+});
+
+confirmSendBtn.addEventListener('click', () => {
+  confirmModal.hidden = true;
+  launchDraw();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (!confirmModal.hidden) {
+    confirmModal.hidden = true;
+    launchDrawBtn.focus();
+  } else if (!drawModal.hidden) {
+    drawModal.hidden = true;
+  }
+});
+
+drawModal.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab') return;
+
+  const focusable = drawModal.querySelectorAll('a, button');
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+});
+
+confirmModal.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab') return;
+
+  const focusable = confirmModal.querySelectorAll('button');
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
 });
 
 
@@ -178,7 +236,7 @@ function createParticipantRow(name = '', email = '', exclusion = '', removable =
       <input type="text" class="participant-name" placeholder="Prénom" value="${name}">
     </div>
     <div class="field no-label">
-      <input type="text" class="participant-email" placeholder="email@exemple.com" value="${email}">
+      <input type="mail" class="participant-email" placeholder="email@exemple.com" value="${email}">
     </div>
     <div class="field no-label">
       <select class="participant-exclusion">
@@ -288,7 +346,7 @@ async function launchDraw() {
     .filter((input) => input.value.trim() && !input.checkValidity());
 
   if (invalidEmails.length > 0) {
-    alert('Une ou plusieurs adresses email ne sont pas valides. Merci de les corriger.');
+    alert('Une ou plusieurs adresses email ne sont pas valides. Veuillez vérifier les entrées saisies.');
     invalidEmails[0].focus();
     return;
   }
@@ -327,12 +385,15 @@ try {
     if (result.sent === result.total) {
       document.getElementById('modal-title').textContent = '🎉 Tirage réalisé !';
       document.getElementById('modal-message').textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
+      modalCloseBtn.hidden = true;
       drawModal.hidden = false;
+      drawModal.querySelector('a, button').focus();
     } else if (result.sent > 0) {
       document.getElementById('modal-title').textContent = '⚠️ Tirage envoyé partiellement';
-      document.getElementById('modal-message').textContent = `${result.sent} email(s) sur ${result.total} ont bien été envoyés. Vérifiez les adresses des participants manquants.`;
+      document.getElementById('modal-message').textContent = `Email(s) non envoyé(s) pour : ${result.failedNames.join(', ')}. Vérifiez leur adresse et relancez le tirage si besoin.`;
       modalCloseBtn.hidden = false;
       drawModal.hidden = false;
+      drawModal.querySelector('a, button').focus();
     } else {
       alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Veuillez réessayer.");
     }
