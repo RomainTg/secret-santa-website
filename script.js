@@ -133,7 +133,8 @@ modalCloseBtn.addEventListener('click', () => {
 });
 
 confirmSendBtn.addEventListener('click', () => {
-  confirmModal.hidden = true;
+  document.getElementById('confirm-view').hidden = true;
+  document.getElementById('loading-view').hidden = false;
   launchDraw();
 });
 
@@ -166,7 +167,9 @@ drawModal.addEventListener('keydown', (e) => {
 confirmModal.addEventListener('keydown', (e) => {
   if (e.key !== 'Tab') return;
 
-  const focusable = confirmModal.querySelectorAll('button');
+  const focusable = confirmModal.querySelectorAll('button:not([hidden] button)');
+  if (focusable.length === 0) return;
+
   const first = focusable[0];
   const last = focusable[focusable.length - 1];
 
@@ -199,34 +202,77 @@ const participantList = document.getElementById('participant-list');
 const addParticipantBtn = document.getElementById('add-participant');
 
 function updateExclusionOptions() {
-  const nameInputs = participantList.querySelectorAll('.participant-name');
-  const names = Array.from(nameInputs)
-    .map((input) => input.value.trim())
-    .filter((name) => name.length > 0);
-
   participantList.querySelectorAll('.participant-row').forEach((row) => {
-    const ownName = row.querySelector('.participant-name').value.trim();
-    const select = row.querySelector('.participant-exclusion');
-    const previousValue = select.value;
-
-    select.innerHTML = '<option>Aucune exclusion</option>';
-    names.filter((name) => name !== ownName).forEach((name) => {
-      const option = document.createElement('option');
-      option.textContent = name;
-      select.appendChild(option);
-    });
-
-    if ([...select.options].some((opt) => opt.textContent === previousValue)) {
-      select.value = previousValue;
-    }
+    refreshExclusionPicker(row);
   });
 }
 
-participantList.addEventListener('input', (e) => {
-  if (e.target.classList.contains('participant-name')) {
-    updateExclusionOptions();
+participantList.addEventListener('change', (e) => {
+  if (e.target.classList.contains('exclusion-picker')) {
+    onExclusionPick(e);
   }
 });
+
+function getMaxExclusions() {
+  const total = participantList.querySelectorAll('.participant-row').length;
+  return Math.max(0, Math.floor((total - 1) / 2));
+}
+
+function refreshExclusionPicker(row) {
+  const ownName = row.querySelector('.participant-name').value.trim();
+  const excludedNames = Array.from(row.querySelectorAll('.exclusion-tag')).map((t) => t.dataset.name);
+  const allNames = Array.from(participantList.querySelectorAll('.participant-name'))
+    .map((input) => input.value.trim())
+    .filter((n) => n.length > 0);
+
+  const picker = row.querySelector('.exclusion-picker');
+  picker.innerHTML = '<option value="">+ Ajouter une exclusion</option>';
+
+  allNames
+    .filter((n) => n !== ownName && !excludedNames.includes(n))
+    .forEach((n) => {
+      const option = document.createElement('option');
+      option.value = n;
+      option.textContent = n;
+      picker.appendChild(option);
+    });
+}
+
+function addExclusionTag(row, name) {
+  const tagsContainer = row.querySelector('.exclusion-tags');
+
+  const tag = document.createElement('span');
+  tag.className = 'exclusion-tag';
+  tag.dataset.name = name;
+  tag.innerHTML = `${name} <button type="button" aria-label="Retirer ${name} des exclusions">×</button>`;
+
+  tag.querySelector('button').addEventListener('click', () => {
+    tag.remove();
+    refreshExclusionPicker(row);
+  });
+
+  tagsContainer.appendChild(tag);
+  refreshExclusionPicker(row);
+}
+
+function onExclusionPick(e) {
+  const picker = e.target;
+  const name = picker.value;
+  if (!name) return;
+
+  const row = picker.closest('.participant-row');
+  const currentCount = row.querySelectorAll('.exclusion-tag').length;
+  const max = getMaxExclusions();
+
+  if (currentCount >= max) {
+    alert(`Vous ne pouvez pas exclure plus de ${max} personne(s) pour ce groupe.`);
+    picker.value = '';
+    return;
+  }
+
+  addExclusionTag(row, name);
+  picker.value = '';
+}
 
 function createParticipantRow(name = '', email = '', exclusion = '', removable = true) {
   const row = document.createElement('div');
@@ -239,9 +285,12 @@ function createParticipantRow(name = '', email = '', exclusion = '', removable =
       <input type="mail" class="participant-email" placeholder="email@exemple.com" value="${email}">
     </div>
     <div class="field no-label">
-      <select class="participant-exclusion">
-        <option>Aucune exclusion</option>
-      </select>
+      <div class="exclusion-field">
+        <div class="exclusion-tags"></div>
+        <select class="exclusion-picker">
+          <option value="">+ Ajouter une exclusion</option>
+        </select>
+      </div>
     </div>
     ${removable ? '<button type="button" class="remove-participant" aria-label="Supprimer ce participant"><span class="remove-icon">🗑</span> Supprimer</button>' : ''}
   `;
@@ -257,6 +306,12 @@ participantList.addEventListener('click', (e) => {
   const removeBtn = e.target.closest('.remove-participant');
   if (removeBtn) {
     removeBtn.closest('.participant-row').remove();
+    updateExclusionOptions();
+  }
+});
+
+participantList.addEventListener('input', (e) => {
+  if (e.target.classList.contains('participant-name')) {
     updateExclusionOptions();
   }
 });
@@ -317,7 +372,7 @@ function getParticipants() {
   return Array.from(participantList.querySelectorAll('.participant-row')).map((row) => ({
     name: row.querySelector('.participant-name').value.trim(),
     email: row.querySelector('.participant-email').value.trim(),
-    exclusion: row.querySelector('.participant-exclusion').value,
+    exclusions: Array.from(row.querySelectorAll('.exclusion-tag')).map((t) => t.dataset.name),
   })).filter((p) => p.name && p.email);
 }
 
@@ -329,7 +384,7 @@ function computeDraw(participants) {
     const shuffled = [...names].sort(() => Math.random() - 0.5);
     const valid = participants.every((p, i) => {
       const recipient = shuffled[i];
-      return recipient !== p.name && recipient !== p.exclusion;
+      return recipient !== p.name && !p.exclusions.includes(recipient);
     });
     if (valid) {
       const result = {};
@@ -382,23 +437,35 @@ try {
 
     const result = await response.json();
 
-    if (result.sent === result.total) {
-      document.getElementById('modal-title').textContent = '🎉 Tirage réalisé !';
-      document.getElementById('modal-message').textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
-      modalCloseBtn.hidden = true;
-      drawModal.hidden = false;
-      drawModal.querySelector('a, button').focus();
-    } else if (result.sent > 0) {
-      document.getElementById('modal-title').textContent = '⚠️ Tirage envoyé partiellement';
-      document.getElementById('modal-message').textContent = `Email(s) non envoyé(s) pour : ${result.failedNames.join(', ')}. Vérifiez leur adresse et relancez le tirage si besoin.`;
-      modalCloseBtn.hidden = false;
-      drawModal.hidden = false;
-      drawModal.querySelector('a, button').focus();
-    } else {
-      alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Veuillez réessayer.");
-    }
+      if (result.sent === result.total) {
+    document.getElementById('modal-title').textContent = '🎉 Tirage réalisé !';
+    document.getElementById('modal-message').textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
+    modalCloseBtn.hidden = true;
+    confirmModal.hidden = true;
+    document.getElementById('confirm-view').hidden = false;
+    document.getElementById('loading-view').hidden = true;
+    drawModal.hidden = false;
+    drawModal.querySelector('a, button').focus();
+  } else if (result.sent > 0) {
+    document.getElementById('modal-title').textContent = '⚠️ Tirage envoyé partiellement';
+    document.getElementById('modal-message').textContent = `Email(s) non envoyé(s) pour : ${result.failedNames.join(', ')}. Vérifiez leur adresse et relancez le tirage si besoin.`;
+    modalCloseBtn.hidden = false;
+    confirmModal.hidden = true;
+    document.getElementById('confirm-view').hidden = false;
+    document.getElementById('loading-view').hidden = true;
+    drawModal.hidden = false;
+    drawModal.querySelector('a, button').focus();
+  } else {
+    confirmModal.hidden = true;
+    document.getElementById('confirm-view').hidden = false;
+    document.getElementById('loading-view').hidden = true;
+    alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Veuillez réessayer.");
+  }
   } catch (error) {
-    alert("Impossible de contacter le serveur d'envoi. Veuillez vérifier votre connexion et réessayez.");
+  confirmModal.hidden = true;
+  document.getElementById('confirm-view').hidden = false;
+  document.getElementById('loading-view').hidden = true;
+  alert("Impossible de contacter le serveur d'envoi. Veuillez vérifier votre connexion et réessayez.");
   } finally {
     launchDrawBtn.disabled = false;
     launchDrawBtn.textContent = originalText;

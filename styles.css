@@ -425,7 +425,6 @@ header.open .mobile-nav {
 
 /* ---------- FORM  ---------- */
   
-
   
 .form-section {
     background:var(--birch);
@@ -538,6 +537,62 @@ header.open .mobile-nav {
     font-size:15px;
     background:#FDFCFA; 
     color:var(--ink);
+}
+
+.exclusion-field {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    border-radius:10px;
+}
+
+.exclusion-tags {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap:6px;
+    margin-bottom:8px;
+    width:100%;
+}
+.exclusion-tag {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:#E4DDCB;
+    color:var(--ink);
+    font-size:13px;
+    padding:4px 8px;
+    border-radius:6px;
+}
+
+.exclusion-tag button {
+    background:none;
+    border:none;
+    cursor:pointer;
+    color:var(--ink-soft);
+    font-size:14px;
+    line-height:1;
+    padding:0;
+}
+
+.exclusion-tag button:hover {
+    color:var(--berry);
+}
+
+.exclusion-picker {
+    flex:1;
+    min-width:120px;
+    border:none;
+    background:transparent;
+    font-family:'Inter';
+    font-size:14px;
+    color:var(--ink-soft);
+}
+
+.exclusion-picker:focus {
+    outline:none;
 }
   
 .card .btn-primary {
@@ -781,7 +836,7 @@ footer {
     gap:10px;
 }
 
-/*----------- POP UP DONATE -----------*/
+/*----------- POP UP -----------*/
 
 .popUp {
     position:fixed;
@@ -835,6 +890,25 @@ footer {
     font-size:13px;
     color:var(--ink-soft);
     text-decoration:underline;
+}
+
+#loading-view {
+    text-align:center;
+    padding:20px 0;
+}
+
+.spinner {
+    width:40px;
+    height:40px;
+    border:4px solid var(--birch);
+    border-top-color:var(--berry);
+    border-radius:50%;
+    margin:0 auto 20px;
+    animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform:rotate(360deg); }
 }
 
 /* ---------- PAGE MENTIONS LÉGALES---------- */
