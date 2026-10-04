@@ -43,7 +43,7 @@
   <a class="logo" href="#">Mon<span>cadeau</span>mystère</a>
   <nav>
     <a href="#trail">Comment ça marche</a>
-    <a href="#form-section">Créer un tirage</a>
+    <a href="#draw-toggle">Créer un tirage</a>
     <a href="#">Idées cadeaux</a>
     <a href="#">Contact</a>
   </nav>
@@ -52,7 +52,7 @@
   </div>
   <div class="mobile-nav" id="mobile-nav">
     <a href="#trail">Comment ça marche</a>
-    <a href="#form-section">Créer un tirage</a>
+    <a href="#draw-toggle">Créer un tirage</a>
     <a href="#">Idées cadeaux</a>
     <a href="#">Contact</a>
   </div>
@@ -67,7 +67,7 @@
   <div class="hero-inner">
     <div>
       <h1>Organisez votre <em>Secret Santa</em> sans effort</h1>
-      <p>Créez votre groupe, ajoutez les participants, et laissez la magie faire le reste. Chacun reçoit son destinataire par e-mail, en toute discrétion.</p>
+      <p>Créez votre groupe, ajoutez les participants, et laissez la magie faire le reste.</p>
       <div class="hero-ctas">
         <a href="#form-section" class="btn btn-primary">Créer mon tirage</a>
       </div>
@@ -92,26 +92,38 @@
 
 <section class="trail" id="trail">
   <div class="trail-head">
-    <h2>Trois étapes avant le grand jour.</h2>
+    <h2>Quatre étapes avant le grand jour.</h2>
   </div>
   <div class="path">
     <div class="step">
       <div class="step-dot">1</div>
-      <h3>Invitez les participants</h3>
-      <p>Commencez par créer un groupe (famille, amis ou collègues) et ajoutez les informations de chaque participant, prénom et adresse e-mail.</p>
+      <h3>Choisissez le type de tirage</h3>
+      <p>Vous avez le choix entre deux types de tirages, selon votre contexte. Un tirage à distance avec envois d'e-mails automatiques. Un tirage "LIVE" où tous les participants sont présents pour vivre le suspense!</p>
     </div>
     <div class="step">
       <div class="step-dot">2</div>
-      <h3>Le tirage est automatique</h3>
-      <p>L'algorithme évite les doublons, respecte strictement les exclusions et envoie tous les e-mails.</p>
+      <h3>Invitez les participants</h3>
+      <p>Commencez par créer un groupe (famille, amis ou collègues) et ajoutez les informations de chaque participant, prénom et adresse e-mail (pour le tirage à distance).</p>
     </div>
     <div class="step">
       <div class="step-dot">3</div>
+      <h3>Le tirage est automatique</h3>
+      <p>L'algorithme évite les doublons, respecte strictement les exclusions et tire les noms aléatoirement.</p>
+    </div>
+    <div class="step">
+      <div class="step-dot">4</div>
       <h3>Chacun reçoit son prétendant</h3>
-      <p>Un courrier discret arrive à chaque adresse e-mail avec le nom du participant à gâter, ainsi le secret est préservé.</p>
+      <p>Un courrier discret arrive à chaque adresse e-mail avec le nom du participant à gâter, ainsi le secret est préservé. Pour le tirage "LIVE", les participants découvrent chacun leurs tours leur prétendant.</p>
     </div>
   </div>
 </section>
+
+<div class="draw-toggle" id="draw-toggle">
+  <div class="draw-toggle-control" role="group" aria-label="Type de tirage">
+    <button type="button" class="draw-toggle-option active" data-draw-mode="remote" aria-pressed="true">Tirage à distance</button>
+    <button type="button" class="draw-toggle-option" data-draw-mode="live" aria-pressed="false">Tirage "live"</button>
+  </div>
+</div>
 
 <section class="form-section" id="form-section">
   <div class="form-wrap">
@@ -161,7 +173,7 @@
               <label>Prénom</label>
               <input type="text" class="participant-name" placeholder="Camille">
             </div>
-            <div class="field">
+            <div class="field participant-email-field">
               <label>Email</label>
               <input type="email" class="participant-email" placeholder="camille@email.com">
             </div>
@@ -179,7 +191,7 @@
             <div class="field no-label">
               <input type="text" class="participant-name" placeholder="Yanis">
             </div>
-            <div class="field no-label">
+            <div class="field no-label participant-email-field">
               <input type="email" class="participant-email" placeholder="yanis@email.com">
             </div>
             <div class="field no-label">
@@ -195,7 +207,7 @@
             <div class="field no-label">
               <input type="text" class="participant-name" placeholder="Lina">
             </div>
-            <div class="field no-label">
+            <div class="field no-label participant-email-field">
               <input type="email" class="participant-email" placeholder="lina@email.com">
             </div>
             <div class="field no-label">

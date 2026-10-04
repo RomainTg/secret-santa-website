@@ -355,12 +355,12 @@ header.open .mobile-nav {
     }
 }
 
-/* ---------- TROIS ETAPES ---------- */
+/* ---------- QUATRE ETAPES ---------- */
   
 .trail {
-    max-width:1140px; 
+    max-width:1240px; 
     margin:96px auto; 
-    padding:0 6%;
+    padding:0 5%;
 }
   
 .trail-head {
@@ -374,7 +374,7 @@ header.open .mobile-nav {
   
 .trail-head h2 {
     font-size:34px; 
-    max-width:420px;
+    max-width:650px;
 }
 
 .trail-head p {
@@ -425,6 +425,62 @@ header.open .mobile-nav {
 
 /* ---------- FORM  ---------- */
   
+.draw-toggle {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.draw-toggle-control {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    width:min(100%, 420px);
+    border:2px solid var(--berry);
+    border-radius:999px;
+    overflow:hidden;
+    background:var(--snow);
+}
+
+.draw-toggle-option {
+    min-height:48px;
+    padding:10px 16px;
+    border:0;
+    background:var(--snow);
+    color:var(--berry);
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background-color .2s ease, color .2s ease;
+}
+
+.draw-toggle-option + .draw-toggle-option {
+    border-left:1px solid var(--berry);
+}
+
+.draw-toggle-option.active {
+    background:var(--berry);
+    color:var(--birch);
+}
+
+.draw-toggle-control.live-draw .draw-toggle-option + .draw-toggle-option {
+    border-left-color:var(--birch);
+}
+
+.draw-toggle-option:focus-visible {
+    outline:2px solid var(--pine);
+    outline-offset:-4px;
+}
+
+.draw-toggle-control.is-disabled {
+    opacity:0.6;
+    cursor:not-allowed;
+}
+
+.draw-toggle-option:disabled {
+    cursor:not-allowed;
+}
   
 .form-section {
     background:var(--birch);
@@ -510,6 +566,10 @@ header.open .mobile-nav {
     padding-top:10px;
     padding-bottom:20px; 
     border-bottom:1px solid #E4DDCB;
+}
+
+.form-section.live-draw .participant-email-field {
+    display:none;
 }
   
 .participant-list .participant-row:last-child {
@@ -1140,8 +1200,6 @@ footer {
 
 .hero p{font-size:14px;}
 
-.path{grid-template-columns:repeat(3,1fr); gap:32px;}
-
 .moon {
     position:absolute;
     left:88%;
@@ -1272,6 +1330,8 @@ nav {display:flex;}
 
 .hero p{font-size:16px;}
 
+.path{grid-template-columns:repeat(4,1fr); gap:45px;}
+
 .moon {
     position:absolute;
     left:80%;
@@ -1358,6 +1418,10 @@ nav a {
     height:auto;
     z-index:2; 
     pointer-events:none;
+}
+
+.trail {
+    padding:2%;
 }
 
 }

@@ -3,6 +3,10 @@ const burgerBtn = document.getElementById('burger-btn');
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
 const launchDrawBtn = document.getElementById('launch-draw');
+const drawToggle = document.querySelector('.draw-toggle-control');
+const drawToggleButtons = drawToggle.querySelectorAll('.draw-toggle-option');
+const formSection = document.getElementById('form-section');
+let liveDrawMode = false;
 const drawModal = document.getElementById('popupModal');
 const modalCloseBtn = document.getElementById('modal-close-btn');
 const confirmModal = document.getElementById('confirmModal');
@@ -13,6 +17,36 @@ burgerBtn.addEventListener('click', () => {
   const isOpen = header.classList.toggle('open');
   burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 });
+
+function setDrawMode(isLive) {
+  liveDrawMode = isLive;
+  formSection.classList.toggle('live-draw', liveDrawMode);
+  drawToggle.classList.toggle('live-draw', liveDrawMode);
+  drawToggleButtons.forEach((button) => {
+    const isSelected = button.dataset.drawMode === (liveDrawMode ? 'live' : 'remote');
+    button.classList.toggle('active', isSelected);
+    button.setAttribute('aria-pressed', String(isSelected));
+  });
+}
+
+drawToggleButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    setDrawMode(button.dataset.drawMode === 'live');
+  });
+});
+
+setDrawMode(false);
+
+function updateDrawToggleAvailability() {
+  const isLocked = Boolean(groupNameInput.value.trim());
+  drawToggleButtons.forEach((button) => {
+    button.disabled = isLocked;
+  });
+  drawToggle.classList.toggle('is-disabled', isLocked);
+}
+
+groupNameInput.addEventListener('input', updateDrawToggleAvailability);
+updateDrawToggleAvailability();
 
 document.addEventListener('click', (e) => {
   if(header.classList.contains('open') && !header.contains(e.target)){
@@ -81,7 +115,7 @@ function nextStep() {
       if (!budgetInput.value.trim()) return;
       showStep(3);
       const budgetValue = budgetInput.value.trim().replace('€', '');
-      document.getElementById('budget-title').textContent = `${budgetValue}€`;
+      document.getElementById('budget-title').textContent = `Budget : ${budgetValue}€`;
       break;
     case 3:
       launchDraw();
@@ -281,8 +315,8 @@ function createParticipantRow(name = '', email = '', exclusion = '', removable =
     <div class="field no-label">
       <input type="text" class="participant-name" placeholder="Prénom" value="${name}">
     </div>
-    <div class="field no-label">
-      <input type="mail" class="participant-email" placeholder="email@exemple.com" value="${email}">
+    <div class="field no-label participant-email-field">
+      <input type="email" class="participant-email" placeholder="email@exemple.com" value="${email}">
     </div>
     <div class="field no-label">
       <div class="exclusion-field">
@@ -355,13 +389,6 @@ function importParticipants(rows) {
   });
 
   updateExclusionOptions();
-
-  rows.forEach((row, index) => {
-    const exclusion = (row['Exclusion'] || '').toString().trim();
-    if (!exclusion) return;
-    const select = participantList.querySelectorAll('.participant-exclusion')[index];
-    if (select) select.value = exclusion;
-  });
 }
 
 
