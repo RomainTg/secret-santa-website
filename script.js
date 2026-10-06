@@ -3,8 +3,8 @@ const burgerBtn = document.getElementById('burger-btn');
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
 const launchDrawBtn = document.getElementById('launch-draw');
-const drawToggle = document.querySelector('.draw-toggle-control');
-const drawToggleButtons = drawToggle.querySelectorAll('.draw-toggle-option');
+const drawToggle = document.querySelector('.radio-switch');
+const drawToggleButtons = drawToggle.querySelectorAll('input[type="radio"]');
 const formSection = document.getElementById('form-section');
 let liveDrawMode = false;
 const drawModal = document.getElementById('popupModal');
@@ -249,7 +249,9 @@ participantList.addEventListener('change', (e) => {
 
 function getMaxExclusions() {
   const total = participantList.querySelectorAll('.participant-row').length;
-  return Math.max(0, Math.floor((total - 1) / 2));
+  const base = Math.floor((total - 1) / 2);
+  
+  return total >= 4 ? base + 1 : base;
 }
 
 function refreshExclusionPicker(row) {
@@ -295,11 +297,11 @@ function onExclusionPick(e) {
   if (!name) return;
 
   const row = picker.closest('.participant-row');
-  const currentCount = row.querySelectorAll('.exclusion-tag').length;
+  const totalCount = participantList.querySelectorAll('.exclusion-tag').length;
   const max = getMaxExclusions();
 
-  if (currentCount >= max) {
-    alert(`Vous ne pouvez pas exclure plus de ${max} personne(s) pour ce groupe.`);
+  if (totalCount >= max) {
+    alert(`Le groupe ne peut pas avoir plus de ${max} exclusion(s) au total.`);
     picker.value = '';
     return;
   }

@@ -425,60 +425,89 @@ header.open .mobile-nav {
 
 /* ---------- FORM  ---------- */
   
-.draw-toggle {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-bottom:24px;
+.radio-switch {
+    position: relative;
+    display: flex;
+    margin: 0 auto 40px;
+    max-width: 450px;
+    width: 100%;
+    height: 60px;
+    background: var(--berry);
+    border-radius: 100px;
+    padding: 5px 15px;
+    box-sizing: border-box;
 }
 
-.draw-toggle-control {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    width:min(100%, 420px);
-    border:2px solid var(--berry);
-    border-radius:999px;
-    overflow:hidden;
-    background:var(--snow);
+.radio-switch input {
+  display: none;
 }
 
-.draw-toggle-option {
-    min-height:48px;
-    padding:10px 16px;
-    border:0;
-    background:var(--snow);
-    color:var(--berry);
-    font-family:'Inter', sans-serif;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    transition:background-color .2s ease, color .2s ease;
+.radio-switch label {
+  position: relative;
+  z-index: 2; /* Positionné au-dessus du slider blanc */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border-radius: 100px;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.4s ease;
 }
 
-.draw-toggle-option + .draw-toggle-option {
-    border-left:1px solid var(--berry);
+/* Changement de couleur du texte actif */
+.radio-switch input:checked + label {
+  color: var(--berry);
+  animation: radio-toggle-bounce 0.4s ease-out;
 }
 
-.draw-toggle-option.active {
-    background:var(--berry);
-    color:var(--birch);
+@keyframes radio-toggle-bounce {
+    0%, 100% { transform:scale(1); }
+    45% { transform:scale(1.20); }
+    75% { transform:scale(0.85); }
 }
 
-.draw-toggle-control.live-draw .draw-toggle-option + .draw-toggle-option {
-    border-left-color:var(--birch);
+@media (prefers-reduced-motion: reduce) {
+    .radio-switch input:checked + label {
+        transition:none;
+        animation:none;
+    }
 }
 
-.draw-toggle-option:focus-visible {
-    outline:2px solid var(--pine);
-    outline-offset:-4px;
+/* L'élément slider blanc qui glisse */
+.radio-switch .slider {
+    position: absolute;
+    top: 7px;
+    left: 12px;
+    /* Largeur exacte d'une option = (100% - padding_gauche - padding_droite) / 2 */
+    width: calc((100% - 24px) / 2);
+    height: calc(100% - 14px);
+    background: #ffffff;
+    border-radius: 100px;
+    z-index: 1; /* Derrière les labels */
+    box-shadow: 0 8px 20px rgba(37, 37, 37, 0.12);
+    /* Animation fluide */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.draw-toggle-control.is-disabled {
-    opacity:0.6;
-    cursor:not-allowed;
+ /* Déplacement du slider selon le bouton sélectionné */
+#tirageDistanciel:checked ~ .slider {
+    transform: translateX(0%);
 }
 
-.draw-toggle-option:disabled {
+#tirageLive:checked ~ .slider {
+    transform: translateX(100%);
+}
+
+.radio-switch.is-disabled {
+    filter:grayscale(1);
+    opacity:0.5;
+}
+
+.radio-switch.is-disabled label {
     cursor:not-allowed;
 }
   

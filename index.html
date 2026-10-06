@@ -43,7 +43,7 @@
   <a class="logo" href="#">Mon<span>cadeau</span>mystère</a>
   <nav>
     <a href="#trail">Comment ça marche</a>
-    <a href="#draw-toggle">Créer un tirage</a>
+    <a href="#radio-switch">Créer un tirage</a>
     <a href="#">Idées cadeaux</a>
     <a href="#">Contact</a>
   </nav>
@@ -52,7 +52,7 @@
   </div>
   <div class="mobile-nav" id="mobile-nav">
     <a href="#trail">Comment ça marche</a>
-    <a href="#draw-toggle">Créer un tirage</a>
+    <a href="#radio-switch">Créer un tirage</a>
     <a href="#">Idées cadeaux</a>
     <a href="#">Contact</a>
   </div>
@@ -103,12 +103,12 @@
     <div class="step">
       <div class="step-dot">2</div>
       <h3>Invitez les participants</h3>
-      <p>Commencez par créer un groupe (famille, amis ou collègues) et ajoutez les informations de chaque participant, prénom et adresse e-mail (pour le tirage à distance).</p>
+      <p>Commencez par créer un groupe (famille, amis ou collègues) et ajoutez les informations de chaque participant, prénoms, exclusions et adresse e-mail (pour le tirage à distance).</p>
     </div>
     <div class="step">
       <div class="step-dot">3</div>
-      <h3>Le tirage est automatique</h3>
-      <p>L'algorithme évite les doublons, respecte strictement les exclusions et tire les noms aléatoirement.</p>
+      <h3>Un tirage presque magique</h3>
+      <p>L'algorithme évite les doublons, respecte toutes les exclusions et tire les prénoms aléatoirement. Il dévoile ensuite les résultats aux participants (par e-mail ou en personne).</p>
     </div>
     <div class="step">
       <div class="step-dot">4</div>
@@ -118,14 +118,17 @@
   </div>
 </section>
 
-<div class="draw-toggle" id="draw-toggle">
-  <div class="draw-toggle-control" role="group" aria-label="Type de tirage">
-    <button type="button" class="draw-toggle-option active" data-draw-mode="remote" aria-pressed="true">Tirage à distance</button>
-    <button type="button" class="draw-toggle-option" data-draw-mode="live" aria-pressed="false">Tirage "live"</button>
-  </div>
-</div>
 
 <section class="form-section" id="form-section">
+
+  <div class="radio-switch">
+    <input type="radio" id="tirageDistanciel" name="tirage" value="remote" checked>
+    <label for="tirageDistanciel">Tirage par e-mail</label>
+    <input type="radio" id="tirageLive" name="tirage" value="live">
+    <label for="tirageLive">Tirage "live"</label>
+    <div class="slider"></div>
+  </div>
+
   <div class="form-wrap">
     <div class="form-copy">
       <h2>Un formulaire qui se remplit en douceur</h2>
