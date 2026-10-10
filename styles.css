@@ -144,24 +144,33 @@ nav {
 }
 
 .mobile-nav {
-    position:absolute; 
-    top:100%; 
-    left:0; 
-    right:0;
-    background:var(--snow); 
-    border-radius:0 0 20px 20px;
-    box-shadow:0 20px 40px -20px rgba(20,35,28,0.25);
-    padding:8px 6% 20px;
-    display:flex; 
-    flex-direction:column;
-    max-height:0; 
-    overflow:hidden; 
-    opacity:0;
-    transition:max-height .25s ease, opacity .2s ease;
-    }
+    position: absolute; 
+    top: 100%; 
+    left: 0; 
+    right: 0;
+    background: var(--snow); 
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 20px 40px -20px rgba(20,35,28,0.25);
+    padding: 8px 6% 20px;
+    display: none; /* Par défaut caché */
+    flex-direction: column;
+}
 
 header.open .mobile-nav {
-    max-height:260px; opacity:1;
+    display: flex; 
+}
+
+body.home-page .mobile-nav {
+    display: flex; 
+    max-height: 0; 
+    overflow: hidden; 
+    opacity: 0;
+    transition: max-height 0.25s ease, opacity 0.2s ease;
+}
+
+body.home-page header.open .mobile-nav {
+    max-height: 260px;
+    opacity: 1;
 }
 
 .mobile-nav a{
@@ -597,7 +606,7 @@ header.open .mobile-nav {
     border-bottom:1px solid #E4DDCB;
 }
 
-.form-section.live-draw .participant-email-field {
+#form-section.live-draw .participant-email-field {
     display:none;
 }
   
@@ -939,6 +948,21 @@ footer {
 }
 
 .popUp[hidden] {
+    display:none;
+}
+
+.popUpLive {
+    position:fixed;
+    inset:0;
+    background:rgba(18, 39, 32, 0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+}
+
+.popUpLive[hidden] {
     display:none;
 }
 

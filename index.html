@@ -37,13 +37,13 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="home-page">
 
 <header id="site-header">
   <a class="logo" href="#">Mon<span>cadeau</span>mystère</a>
   <nav>
     <a href="#trail">Comment ça marche</a>
-    <a href="#radio-switch">Créer un tirage</a>
+    <a href="#form-section">Créer un tirage</a>
     <a href="#">Idées cadeaux</a>
     <a href="#">Contact</a>
   </nav>
@@ -52,7 +52,7 @@
   </div>
   <div class="mobile-nav" id="mobile-nav">
     <a href="#trail">Comment ça marche</a>
-    <a href="#radio-switch">Créer un tirage</a>
+    <a href="#form-section">Créer un tirage</a>
     <a href="#">Idées cadeaux</a>
     <a href="#">Contact</a>
   </div>
@@ -284,7 +284,51 @@
   </div>
 </div>
 
+
+<div class="popUpLive" id="popupModalLive" hidden>
+  <div class="modal-card">
+    <h3 id="live-modal-title">🎉 Tirage réalisé !</h3>
+    <p id="live-modal-message">
+      Chaque participant va découvrir le nom de la personne qu'il doit gâter.
+    </p>
+    <!-- Révélation individuelle -->
+    <div id="live-reveal-controls" hidden>
+      <label for="reveal-participant">
+        Sélectionne ton prénom
+      </label>
+      <select id="reveal-participant">
+        <option value="">Choisir un participant</option>
+      </select>
+      <button type="button" class="btn btn-primary" id="reveal-btn" disabled>
+        Révéler mon résultat
+      </button>
+      <div id="reveal-result" hidden aria-live="polite">
+        <p>Tu dois gâter :</p>
+        <h3 id="reveal-name"></h3>
+        <button type="button" class="btn-close-modal" id="hide-result-btn">
+          Masquer mon résultat
+        </button>
+      </div>
+    </div>
+    
+    <div class="modal-actions" id="modal-actions">
+      <a href="index.html" class="btn btn-primary">
+        Retour à l'accueil
+      </a>
+      <button type="button" class="btn-close-modal"
+              id="modal-close-btn" hidden>
+        Fermer et corriger
+      </button>
+      <a href="#" target="_blank" rel="noopener"
+         class="modal-donate-link">
+        Envie de soutenir le projet ? Faites un don
+      </a>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="burger.js"></script>
 <script src="script.js"></script>
 
 </body>

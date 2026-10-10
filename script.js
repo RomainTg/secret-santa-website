@@ -1,41 +1,47 @@
-const header = document.getElementById('site-header');
-const burgerBtn = document.getElementById('burger-btn');
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
 const launchDrawBtn = document.getElementById('launch-draw');
 const drawToggle = document.querySelector('.radio-switch');
 const drawToggleButtons = drawToggle.querySelectorAll('input[type="radio"]');
 const formSection = document.getElementById('form-section');
-let liveDrawMode = false;
 const drawModal = document.getElementById('popupModal');
 const modalCloseBtn = document.getElementById('modal-close-btn');
 const confirmModal = document.getElementById('confirmModal');
 const confirmSendBtn = document.getElementById('confirm-send-btn');
 const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+const popupModalLive = document.getElementById('popupModalLive');
+const liveModalTitle = document.getElementById('live-modal-title');
+const liveModalMessage = document.getElementById('live-modal-message');
+const modalActions = document.getElementById('modal-actions');
+const liveRevealControls = document.getElementById('live-reveal-controls');
+const revealParticipant = document.getElementById('reveal-participant');
+const revealBtn = document.getElementById('reveal-btn');
+const revealResult = document.getElementById('reveal-result');
+const revealName = document.getElementById('reveal-name');
+const hideResultBtn = document.getElementById('hide-result-btn');
 
-burgerBtn.addEventListener('click', () => {
-  const isOpen = header.classList.toggle('open');
-  burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-});
+let liveDrawMode = false;
+let currentDraw = null;
 
 function setDrawMode(isLive) {
   liveDrawMode = isLive;
+
   formSection.classList.toggle('live-draw', liveDrawMode);
   drawToggle.classList.toggle('live-draw', liveDrawMode);
+
   drawToggleButtons.forEach((button) => {
-    const isSelected = button.dataset.drawMode === (liveDrawMode ? 'live' : 'remote');
+    const isSelected = button.value === (liveDrawMode ? 'live' : 'remote');
+
     button.classList.toggle('active', isSelected);
     button.setAttribute('aria-pressed', String(isSelected));
   });
 }
 
 drawToggleButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    setDrawMode(button.dataset.drawMode === 'live');
-  });
+    button.addEventListener('change', () => {
+        setDrawMode(button.value === 'live');
+    });
 });
-
-setDrawMode(false);
 
 function updateDrawToggleAvailability() {
   const isLocked = Boolean(groupNameInput.value.trim());
@@ -47,20 +53,6 @@ function updateDrawToggleAvailability() {
 
 groupNameInput.addEventListener('input', updateDrawToggleAvailability);
 updateDrawToggleAvailability();
-
-document.addEventListener('click', (e) => {
-  if(header.classList.contains('open') && !header.contains(e.target)){
-    header.classList.remove('open');
-    burgerBtn.setAttribute('aria-expanded', 'false');
-  }
-});
-
-document.getElementById('mobile-nav').addEventListener('click', (e) => {
-  if(e.target.tagName === 'A'){
-    header.classList.remove('open');
-    burgerBtn.setAttribute('aria-expanded', 'false');
-  }
-});
 
 const box = document.getElementById('snowfall');
 
@@ -145,8 +137,12 @@ document.querySelectorAll('.step-next').forEach((btn) => {
 });
 
 launchDrawBtn.addEventListener('click', () => {
-  confirmModal.hidden = false;
-  confirmSendBtn.focus();
+  if (!liveDrawMode) {
+    confirmModal.hidden = false;
+    confirmSendBtn.focus();
+  } else {
+    launchDraw();
+  }
 });
 
 groupNameInput.addEventListener('keydown', (e) => {
@@ -398,11 +394,15 @@ function importParticipants(rows) {
 
 
 function getParticipants() {
-  return Array.from(participantList.querySelectorAll('.participant-row')).map((row) => ({
+  return Array.from(
+    participantList.querySelectorAll('.participant-row')
+  ).map((row) => ({
     name: row.querySelector('.participant-name').value.trim(),
     email: row.querySelector('.participant-email').value.trim(),
-    exclusions: Array.from(row.querySelectorAll('.exclusion-tag')).map((t) => t.dataset.name),
-  })).filter((p) => p.name && p.email);
+    exclusions: Array.from(
+      row.querySelectorAll('.exclusion-tag')
+    ).map((t) => t.dataset.name),
+  })).filter((p) => p.name && (liveDrawMode || p.email));
 }
 
 function computeDraw(participants) {
@@ -426,13 +426,22 @@ function computeDraw(participants) {
 
 async function launchDraw() {
   const participants = getParticipants();
-  const invalidEmails = Array.from(participantList.querySelectorAll('.participant-email'))
-    .filter((input) => input.value.trim() && !input.checkValidity());
+ 
+  if (!liveDrawMode) {
+    const invalidEmails = Array.from(
+      participantList.querySelectorAll('.participant-row')
+    ).filter((row) => {
+      const name = row.querySelector('.participant-name').value.trim();
+      const email = row.querySelector('.participant-email');
 
-  if (invalidEmails.length > 0) {
-    alert('Une ou plusieurs adresses email ne sont pas valides. Veuillez vérifier les entrées saisies.');
-    invalidEmails[0].focus();
-    return;
+      return name && (!email.value.trim() || !email.checkValidity());
+    }).map((row) => row.querySelector('.participant-email'));
+
+    if (invalidEmails.length > 0) {
+      alert('Une ou plusieurs adresses email sont manquantes ou invalides. Veuillez les vérifier.');
+      invalidEmails[0].focus();
+      return;
+    }
   }
 
   if (participants.length < 3) {
@@ -440,10 +449,44 @@ async function launchDraw() {
     return;
   }
 
+  const lowerNames = participants.map((p) => p.name.toLowerCase());
+  if (new Set(lowerNames).size !== lowerNames.length) {
+    alert('Deux participants ont le même prénom : ajoutez une initiale pour les distinguer (ex. Marie L. et Marie D.).');
+    return;
+  }
+
   const draw = computeDraw(participants);
 
   if (!draw) {
     alert("Impossible de trouver un tirage valide avec les exclusions actuelles. Veuillez tenter d'en retirer une.");
+    return;
+  }
+
+  if (liveDrawMode) {
+    currentDraw = draw;
+
+    liveModalTitle.textContent = '🎁 Découvre qui tu dois gâter !';
+    liveModalMessage.hidden = true;
+    modalActions.hidden = true;
+    liveRevealControls.hidden = false;
+
+    revealParticipant.replaceChildren(
+      new Option('Choisir un participant', '')
+    );
+
+    participants.forEach((participant) => {
+      revealParticipant.add(
+        new Option(participant.name, participant.name)
+      );
+    });
+
+    revealParticipant.value = '';
+    revealBtn.disabled = true;
+    revealResult.hidden = true;
+    revealName.textContent = '';
+
+    popupModalLive.hidden = false;
+    revealParticipant.focus();
     return;
   }
 
@@ -467,8 +510,8 @@ try {
     const result = await response.json();
 
       if (result.sent === result.total) {
-    document.getElementById('modal-title').textContent = '🎉 Tirage réalisé !';
-    document.getElementById('modal-message').textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
+    liveModalTitle.textContent = '🎉 Tirage réalisé !';
+    liveModalMessage.textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
     modalCloseBtn.hidden = true;
     confirmModal.hidden = true;
     document.getElementById('confirm-view').hidden = false;
@@ -476,8 +519,8 @@ try {
     drawModal.hidden = false;
     drawModal.querySelector('a, button').focus();
   } else if (result.sent > 0) {
-    document.getElementById('modal-title').textContent = '⚠️ Tirage envoyé partiellement';
-    document.getElementById('modal-message').textContent = `Email(s) non envoyé(s) pour : ${result.failedNames.join(', ')}. Vérifiez leur adresse et relancez le tirage si besoin.`;
+    document.getElementById('live-modal-title').textContent = '⚠️ Tirage envoyé partiellement';
+    document.getElementById('live-modal-message').textContent = `Email(s) non envoyé(s) pour : ${result.failedNames.join(', ')}. Vérifiez leur adresse et relancez le tirage si besoin.`;
     modalCloseBtn.hidden = false;
     confirmModal.hidden = true;
     document.getElementById('confirm-view').hidden = false;
@@ -502,3 +545,50 @@ try {
 }
 
 showStep(1);
+
+/* ---------- RÉVÉLATION DES TIRAGES LIVE ---------- */
+
+revealParticipant.addEventListener('change', () => {
+  revealBtn.disabled = !revealParticipant.value;
+  revealResult.hidden = true;
+  revealName.textContent = '';
+});
+
+revealBtn.addEventListener('click', () => {
+  const participantName = revealParticipant.value;
+
+  if (!participantName || !currentDraw) {
+    return;
+  }
+
+  revealName.textContent = currentDraw[participantName];
+  revealResult.hidden = false;
+});
+
+hideResultBtn.addEventListener('click', () => {
+  revealResult.hidden = true;
+  revealName.textContent = '';
+  revealParticipant.value = '';
+  revealBtn.disabled = true;
+});
+
+hideResultBtn.addEventListener('click', () => {
+  const doneName = revealParticipant.value;
+
+  revealResult.hidden = true;
+  revealName.textContent = '';
+
+  const doneOption = Array.from(revealParticipant.options).find((opt) => opt.value === doneName);
+  if (doneOption) doneOption.remove();
+
+  revealParticipant.value = '';
+  revealBtn.disabled = true;
+
+  if (revealParticipant.options.length === 1) {
+    liveRevealControls.hidden = true;
+    liveModalTitle.textContent = '🎉 Tout le monde a découvert son prétendant !';
+    liveModalMessage.textContent = 'Que la magie opère, joyeux Secret Santa !';
+    liveModalMessage.hidden = false;
+    modalActions.hidden = false;
+  }
+});
