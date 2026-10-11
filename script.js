@@ -5,6 +5,8 @@ const drawToggle = document.querySelector('.radio-switch');
 const drawToggleButtons = drawToggle.querySelectorAll('input[type="radio"]');
 const formSection = document.getElementById('form-section');
 const drawModal = document.getElementById('popupModal');
+const modalTitle = document.getElementById('modal-title');
+const modalMessage = document.getElementById('modal-message');
 const modalCloseBtn = document.getElementById('modal-close-btn');
 const confirmModal = document.getElementById('confirmModal');
 const confirmSendBtn = document.getElementById('confirm-send-btn');
@@ -42,6 +44,8 @@ drawToggleButtons.forEach((button) => {
         setDrawMode(button.value === 'live');
     });
 });
+
+setDrawMode(document.getElementById('tirageLive').checked);
 
 function updateDrawToggleAvailability() {
   const isLocked = Boolean(groupNameInput.value.trim());
@@ -563,13 +567,6 @@ revealBtn.addEventListener('click', () => {
 
   revealName.textContent = currentDraw[participantName];
   revealResult.hidden = false;
-});
-
-hideResultBtn.addEventListener('click', () => {
-  revealResult.hidden = true;
-  revealName.textContent = '';
-  revealParticipant.value = '';
-  revealBtn.disabled = true;
 });
 
 hideResultBtn.addEventListener('click', () => {
