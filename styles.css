@@ -999,6 +999,17 @@ footer {
     justify-content:center;
 }
 
+.modal-actions-live {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:20px;
+}
+
+.modal-actions-live .btn {
+    justify-content:center;
+}
+
 .modal-donate-link {
     font-size:13px;
     color:var(--ink-soft);
@@ -1022,6 +1033,72 @@ footer {
 
 @keyframes spin {
     to { transform:rotate(360deg); }
+}
+
+button {
+    font-family:inherit;
+}
+
+.close-modal,
+.btn-close-modal {
+    background:transparent;
+    color:var(--ink-soft);
+    border:1px solid var(--pine);
+    cursor:pointer;
+    padding:8px 10px;
+    border-radius:100px;
+}
+
+.close-modal:hover,
+.btn-close-modal:hover {
+    background:var(--birch);
+}
+
+#live-reveal-controls {
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    text-align:left;
+}
+
+#live-reveal-controls label {
+    font-size:14px;
+    color:var(--pine-deep);
+}
+
+#reveal-participant {
+    padding:8px;
+    font-family:inherit;
+    border-radius:8px;
+}
+
+#reveal-btn {
+    width:100%;
+    justify-content:center;
+    border:none;
+}
+
+#reveal-btn:disabled {
+    opacity:0.5;
+    pointer-events:none;
+}
+
+#reveal-result {
+    text-align:center;
+    padding:20px;
+    border-radius:12px;
+    background:var(--birch);
+    margin-bottom:30px;
+}
+
+#reveal-result p {
+    margin-bottom:4px;
+}
+
+#reveal-name {
+    font-size:28px;
+    color:var(--berry);
+    margin-bottom:16px;
 }
 
 /* ---------- PAGE MENTIONS LÉGALES---------- */

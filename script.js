@@ -1,5 +1,6 @@
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
+const budgetSuggestionButtons = document.getElementById('budget-suggestions');
 const launchDrawBtn = document.getElementById('launch-draw');
 const drawToggle = document.querySelector('.radio-switch');
 const drawToggleButtons = drawToggle.querySelectorAll('input[type="radio"]');
@@ -21,6 +22,7 @@ const revealBtn = document.getElementById('reveal-btn');
 const revealResult = document.getElementById('reveal-result');
 const revealName = document.getElementById('reveal-name');
 const hideResultBtn = document.getElementById('hide-result-btn');
+const modalActionsLive = document.getElementById('modal-actions-live');
 
 let liveDrawMode = false;
 let currentDraw = null;
@@ -471,8 +473,9 @@ async function launchDraw() {
 
     liveModalTitle.textContent = '🎁 Découvre qui tu dois gâter !';
     liveModalMessage.hidden = true;
-    modalActions.hidden = true;
+    modalActionsLive.style.display = 'none';
     liveRevealControls.hidden = false;
+
 
     revealParticipant.replaceChildren(
       new Option('Choisir un participant', '')
@@ -488,7 +491,7 @@ async function launchDraw() {
     revealBtn.disabled = true;
     revealResult.hidden = true;
     revealName.textContent = '';
-
+    
     popupModalLive.hidden = false;
     revealParticipant.focus();
     return;
@@ -582,10 +585,11 @@ hideResultBtn.addEventListener('click', () => {
   revealBtn.disabled = true;
 
   if (revealParticipant.options.length === 1) {
-    liveRevealControls.hidden = true;
+    liveRevealControls.style.display = 'none';
     liveModalTitle.textContent = '🎉 Tout le monde a découvert son prétendant !';
-    liveModalMessage.textContent = 'Que la magie opère, joyeux Secret Santa !';
+    liveModalMessage.textContent = 'Que la magie opère, joyeux cadeau mystère !';
     liveModalMessage.hidden = false;
-    modalActions.hidden = false;
+    modalActionsLive.style.display = 'flex';
+    revealParticipant.disabled = true;
   }
 });

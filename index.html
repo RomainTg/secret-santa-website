@@ -288,10 +288,7 @@
 <div class="popUpLive" id="popupModalLive" hidden>
   <div class="modal-card">
     <h3 id="live-modal-title">🎉 Tirage réalisé !</h3>
-    <p id="live-modal-message">
-      Chaque participant va découvrir le nom de la personne qu'il doit gâter.
-    </p>
-    <!-- Révélation individuelle -->
+    <p id="live-modal-message">Chaque participant va découvrir le nom de la personne qu'il doit gâter.</p>
     <div id="live-reveal-controls" hidden>
       <label for="reveal-participant">
         Sélectionne ton prénom
@@ -309,9 +306,13 @@
           Masquer mon résultat
         </button>
       </div>
+      <div id="loading-view" hidden>
+        <div class="spinner"></div>
+        <p>Tirage en cours...</p>
+      </div>
     </div>
     
-    <div class="modal-actions" id="modal-actions">
+    <div class="modal-actions-live" id="modal-actions-live">
       <a href="index.html" class="btn btn-primary">
         Retour à l'accueil
       </a>
