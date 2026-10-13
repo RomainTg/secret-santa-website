@@ -17,8 +17,10 @@ const liveModalTitle = document.getElementById('live-modal-title');
 const liveModalMessage = document.getElementById('live-modal-message');
 const modalActions = document.getElementById('modal-actions');
 const liveRevealControls = document.getElementById('live-reveal-controls');
+const revealLabel = document.querySelector('label[for="reveal-participant"]');
 const revealParticipant = document.getElementById('reveal-participant');
 const revealBtn = document.getElementById('reveal-btn');
+const liveLoadingView = document.getElementById('live-loading-view');
 const revealResult = document.getElementById('reveal-result');
 const revealName = document.getElementById('reveal-name');
 const hideResultBtn = document.getElementById('hide-result-btn');
@@ -169,8 +171,6 @@ modalCloseBtn.addEventListener('click', () => {
 });
 
 confirmSendBtn.addEventListener('click', () => {
-  document.getElementById('confirm-view').hidden = true;
-  document.getElementById('loading-view').hidden = false;
   launchDraw();
 });
 
@@ -440,7 +440,7 @@ async function launchDraw() {
       const name = row.querySelector('.participant-name').value.trim();
       const email = row.querySelector('.participant-email');
 
-      return name && (!email.value.trim() || !email.checkValidity());
+      return name && (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()));
     }).map((row) => row.querySelector('.participant-email'));
 
     if (invalidEmails.length > 0) {
@@ -475,7 +475,10 @@ async function launchDraw() {
     liveModalMessage.hidden = true;
     modalActionsLive.style.display = 'none';
     liveRevealControls.hidden = false;
-
+    revealLabel.hidden = true;
+    revealParticipant.hidden = true;
+    revealBtn.hidden = true;
+    liveLoadingView.hidden = false;
 
     revealParticipant.replaceChildren(
       new Option('Choisir un participant', '')
@@ -493,6 +496,12 @@ async function launchDraw() {
     revealName.textContent = '';
     
     popupModalLive.hidden = false;
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    liveLoadingView.hidden = true;
+    revealLabel.hidden = false;
+    revealParticipant.hidden = false;
+    revealBtn.hidden = false;
     revealParticipant.focus();
     return;
   }
@@ -500,6 +509,8 @@ async function launchDraw() {
   launchDrawBtn.disabled = true;
   const originalText = launchDrawBtn.textContent;
   launchDrawBtn.textContent = 'Tirage en cours...';
+  document.getElementById('confirm-view').hidden = true;
+  document.getElementById('loading-view').hidden = false;
 
 try {
     const response = await fetch('/.netlify/functions/send-emails', {
@@ -516,39 +527,43 @@ try {
 
     const result = await response.json();
 
-      if (result.sent === result.total) {
-    liveModalTitle.textContent = '🎉 Tirage réalisé !';
-    liveModalMessage.textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
-    modalCloseBtn.hidden = true;
-    confirmModal.hidden = true;
-    document.getElementById('confirm-view').hidden = false;
-    document.getElementById('loading-view').hidden = true;
-    drawModal.hidden = false;
-    drawModal.querySelector('a, button').focus();
-  } else if (result.sent > 0) {
-    document.getElementById('live-modal-title').textContent = '⚠️ Tirage envoyé partiellement';
-    document.getElementById('live-modal-message').textContent = `Email(s) non envoyé(s) pour : ${result.failedNames.join(', ')}. Vérifiez leur adresse et relancez le tirage si besoin.`;
-    modalCloseBtn.hidden = false;
-    confirmModal.hidden = true;
-    document.getElementById('confirm-view').hidden = false;
-    document.getElementById('loading-view').hidden = true;
-    drawModal.hidden = false;
-    drawModal.querySelector('a, button').focus();
-  } else {
-    confirmModal.hidden = true;
-    document.getElementById('confirm-view').hidden = false;
-    document.getElementById('loading-view').hidden = true;
-    alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Veuillez réessayer.");
-  }
-  } catch (error) {
-  confirmModal.hidden = true;
-  document.getElementById('confirm-view').hidden = false;
-  document.getElementById('loading-view').hidden = true;
-  alert("Impossible de contacter le serveur d'envoi. Veuillez vérifier votre connexion et réessayez.");
-  } finally {
-    launchDrawBtn.disabled = false;
-    launchDrawBtn.textContent = originalText;
-  }
+    if (result.sent === result.total) {
+      modalTitle.textContent = '🎉 Tirage réalisé !';
+      modalMessage.textContent = "Chaque participant va recevoir un email avec le budget et le nom de la personne qu'il doit gâter.";
+      modalCloseBtn.hidden = true;
+      confirmModal.hidden = true;
+      document.getElementById('confirm-view').hidden = false;
+      document.getElementById('loading-view').hidden = true;
+      drawModal.hidden = false;
+      drawModal.querySelector('a, button').focus();
+
+    } else if (result.sent > 0) {
+      modalTitle.textContent = '⚠️ Tirage envoyé partiellement';
+      modalMessage.textContent = `Email(s) non envoyé(s) pour : ${result.failedNames.join(', ')}. Vérifiez leur adresse et relancez le tirage si besoin.`;
+      modalCloseBtn.hidden = false;
+      confirmModal.hidden = true;
+      document.getElementById('confirm-view').hidden = false;
+      document.getElementById('loading-view').hidden = true;
+      drawModal.hidden = false;
+      drawModal.querySelector('a, button').focus();
+
+    } else {
+      confirmModal.hidden = true;
+      document.getElementById('confirm-view').hidden = false;
+      document.getElementById('loading-view').hidden = true;
+      alert("Le tirage a été calculé, mais l'envoi des emails a échoué. Veuillez réessayer.");
+    }
+
+    } catch (error) {
+      confirmModal.hidden = true;
+      document.getElementById('confirm-view').hidden = false;
+      document.getElementById('loading-view').hidden = true;
+      alert("Impossible de contacter le serveur d'envoi. Veuillez vérifier votre connexion et réessayez.");
+
+    } finally {
+      launchDrawBtn.disabled = false;
+      launchDrawBtn.textContent = originalText;
+    }
 }
 
 showStep(1);
@@ -570,6 +585,7 @@ revealBtn.addEventListener('click', () => {
 
   revealName.textContent = currentDraw[participantName];
   revealResult.hidden = false;
+  revealBtn.disabled = true;
 });
 
 hideResultBtn.addEventListener('click', () => {
@@ -582,7 +598,7 @@ hideResultBtn.addEventListener('click', () => {
   if (doneOption) doneOption.remove();
 
   revealParticipant.value = '';
-  revealBtn.disabled = true;
+  revealBtn.disabled = false;
 
   if (revealParticipant.options.length === 1) {
     liveRevealControls.style.display = 'none';

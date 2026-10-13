@@ -1016,7 +1016,8 @@ footer {
     text-decoration:underline;
 }
 
-#loading-view {
+#loading-view,
+#live-loading-view {
     text-align:center;
     padding:20px 0;
 }
@@ -1076,6 +1077,19 @@ button {
     width:100%;
     justify-content:center;
     border:none;
+}
+
+#reveal-btn[hidden] {
+    display:none;
+}
+
+#hide-result-btn {
+    font-family:inherit;
+    background:var(--berry);
+    border:none;
+    color:var(--snow);
+    padding: 12px 20px;
+    font-weight:500;
 }
 
 #reveal-btn:disabled {
