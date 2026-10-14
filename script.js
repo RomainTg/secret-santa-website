@@ -3,7 +3,6 @@ const esc = (s) => String(s)
   .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
-const budgetSuggestionButtons = document.getElementById('budget-suggestions');
 const launchDrawBtn = document.getElementById('launch-draw');
 const drawToggle = document.querySelector('.radio-switch');
 const drawToggleButtons = drawToggle.querySelectorAll('input[type="radio"]');
@@ -18,7 +17,6 @@ const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
 const popupModalLive = document.getElementById('popupModalLive');
 const liveModalTitle = document.getElementById('live-modal-title');
 const liveModalMessage = document.getElementById('live-modal-message');
-const modalActions = document.getElementById('modal-actions');
 const liveRevealControls = document.getElementById('live-reveal-controls');
 const revealLabel = document.querySelector('label[for="reveal-participant"]');
 const revealParticipant = document.getElementById('reveal-participant');
@@ -315,17 +313,21 @@ function onExclusionPick(e) {
   picker.value = '';
 }
 
-function createParticipantRow(name = '', email = '', exclusion = '', removable = true) {
+function createParticipantRow(name = '', email = '', exclusion = '', removable = true, withLabels = false) {
   const row = document.createElement('div');
   row.className = 'participant-row';
-  row.innerHTML = `
-    <div class="field no-label">
+  const fieldClass = withLabels ? 'field' : 'field no-label';
+   row.innerHTML = `
+    <div class="${fieldClass}">
+      ${withLabels ? '<label>Prénom</label>' : ''}
       <input type="text" class="participant-name" placeholder="Prénom" value="${esc(name)}">
     </div>
-    <div class="field no-label participant-email-field">
+    <div class="${fieldClass} participant-email-field">
+      ${withLabels ? '<label>Email</label>' : ''}
       <input type="email" class="participant-email" placeholder="email@exemple.com" value="${esc(email)}">
     </div>
-    <div class="field no-label">
+    <div class="${fieldClass}">
+      ${withLabels ? '<label>Exclusion</label>' : ''}
       <div class="exclusion-field">
         <div class="exclusion-tags"></div>
         <select class="exclusion-picker">
@@ -374,24 +376,33 @@ excelImportInput.addEventListener('change', async (e) => {
 
 
 function importParticipants(rows) {
-  const excelData = Array.from(participantList.querySelectorAll('.participant-name'))
-    .some((input) => input.value.trim() !== '');
+  const validRows = rows
+    .map((row) => ({
+      name: (row['Prénom'] || '').toString().trim(),
+      email: (row['Email'] || '').toString().trim(),
+    }))
+    .filter((p) => p.name && (liveDrawMode || p.email));
 
-  if (excelData) {
-    const replace = confirm('Vous avez déjà des participants saisis. Remplacer par le fichier importé ?');
-    if (replace) participantList.innerHTML = '';
-  } else {
-    participantList.innerHTML = '';
+
+  if (validRows.length === 0) {
+    alert("Aucun participant valide trouvé. Vérifiez les colonnes « Prénom » et « Email » du fichier.");
+    return;
   }
 
-  let currentCount = participantList.querySelectorAll('.participant-row').length;
+  const hasExisting = Array.from(participantList.querySelectorAll('.participant-name'))
+    .some((input) => input.value.trim() !== '');
 
-  rows.forEach((row, index) => {
-    const name = (row['Prénom'] || '').toString().trim();
-    const email = (row['Email'] || '').toString().trim();
-    if (!name || !email) return;
+  if (hasExisting && !confirm('Vous avez déjà des participants saisis. Remplacer par le fichier importé ?')) {
+    return;
+  }
+  participantList.innerHTML = '';
 
-    participantList.appendChild(createParticipantRow(name, email, '', currentCount >= 3));
+  let currentCount = 0;
+
+  validRows.forEach((p) => {
+    participantList.appendChild(
+      createParticipantRow(p.name, p.email, '', currentCount >= 3, currentCount === 0)
+    );
     currentCount++;
   });
 
@@ -487,7 +498,7 @@ async function launchDraw() {
 
   if (liveDrawMode) {
     currentDraw = draw;
-
+  
     liveModalTitle.textContent = '🎁 Découvre qui tu dois gâter !';
     liveModalMessage.hidden = true;
     modalActionsLive.style.display = 'none';
@@ -537,7 +548,7 @@ async function launchDraw() {
           draw,
           participants,
           groupName: groupNameInput.value.trim(),
-          budget: budgetInput.value.trim(),
+          budget: budgetInput.value.replace(/€/g, '').trim(),
           antibot: document.getElementById('antibot').value,
         }),
       });
@@ -623,7 +634,7 @@ hideResultBtn.addEventListener('click', () => {
   if (doneOption) doneOption.remove();
 
   revealParticipant.value = '';
-  revealBtn.disabled = false;
+  revealBtn.disabled = true;
 
   if (revealParticipant.options.length === 1) {
     liveRevealControls.style.display = 'none';

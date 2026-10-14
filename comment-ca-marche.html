@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Comment ça marche ? — Mon cadeau mystère</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Découvrez comment organiser votre Secret Santa en ligne : tirage par e-mail ou en live, participants, exclusions et résultats, étape par étape.">
+<link rel="icon" type="image/png" href="assets/images/favicon.png">
+<link rel="apple-touch-icon" href="assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="site-header">
+  <a class="logo" href="index.html">Mon<span>cadeau</span>mystère</a>
+  <nav>
+    <a href="comment-ca-marche.html">Comment ça marche</a>
+    <a href="index.html#form-section">Créer un tirage</a>
+    <!-- <a href="idees-cadeaux.html">Idées cadeaux</a> -->
+    <a href="index.html#faq">FAQ</a>
+  </nav>
+
+  <button type="button" class="burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span class="bar"></span>
+  </button>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="comment-ca-marche.html">Comment ça marche</a>
+    <a href="index.html#form-section">Créer un tirage</a>
+    <!-- <a href="idees-cadeaux.html">Idées cadeaux</a> -->
+    <a href="index.html#faq">FAQ</a>
+  </div>
+</header>
+
+<section class="pageBanner">
+  <h1>Comment ça marche ?</h1>
+  <p>Du premier prénom au grand secret, étape par étape.</p>
+</section>
+
+<section class="pageContent">
+
+  <h2>1. Choisir son type de tirage</h2>
+  <p>C'est la toute première décision, en haut du formulaire. Le <strong>tirage par e-mail</strong> envoie à chaque participant le prénom de la personne à gâter : parfait si le groupe est dispersé. Le <strong>tirage « live »</strong> se fait devant un même écran : chacun découvre son résultat à tour de rôle, sans qu'aucune adresse e-mail soit nécessaire.</p>
+  <p>Ce choix se verrouille dès qu'un nom de groupe est saisi. Pour en changer, effacez simplement le nom du groupe.</p>
+
+  <h2>2. Nommer le groupe et fixer le budget</h2>
+  <p>Le nom du groupe (« Noël en famille », « Équipe compta »...) sert de repère à tout le monde. Le budget est indicatif : pour un tirage par e-mail, il apparaît dans le message comme budget suggéré.</p>
+
+  <h2>3. Ajouter les participants</h2>
+  <p>Il faut au minimum 3 participants, et au maximum 50. Vous pouvez les saisir un par un avec le bouton « Ajouter un participant » : un prénom, plus une adresse e-mail pour le tirage par e-mail. Deux participants ne peuvent pas avoir le même prénom : ajoutez une initiale pour les distinguer (par exemple Marie L. et Marie D.).</p>
+  <p>Pour un grand groupe, vous pouvez aussi <strong>importer un fichier Excel</strong> (.xlsx) avec les colonnes « Prénom » et « Email ». Un modèle est téléchargeable dans le formulaire. En tirage « live », la colonne Email est ignorée. Si des participants sont déjà saisis, le site vous demande confirmation avant de les remplacer.</p>
+
+  <h2>4. Définir les exclusions</h2>
+  <p>Une fois les prénoms saisis, chaque participant peut se voir attribuer des exclusions : des personnes qu'il ne doit pas tirer (son conjoint, un colocataire...). Une exclusion fonctionne dans un seul sens, donc pour un couple, ajoutez-la des deux côtés. Pour garantir qu'un tirage reste toujours possible, le nombre total d'exclusions est limité selon la taille du groupe.</p>
+
+  <h2>5. Le tirage au sort</h2>
+  <p>Le site mélange les prénoms au hasard, puis vérifie que personne ne se tire lui-même et que toutes les exclusions sont respectées. Si ce n'est pas le cas, il recommence, jusqu'à plusieurs centaines d'essais, jusqu'à trouver une combinaison valide. Chaque participant offre ainsi à une seule personne, et reçoit d'une seule personne. Si aucune combinaison n'existe avec vos exclusions, le site vous invite à en retirer une.</p>
+
+  <h2>6. Découvrir le résultat</h2>
+  <p><strong>Par e-mail :</strong> avant l'envoi, le site vous rappelle de vérifier les adresses. Chaque participant reçoit alors un message avec le prénom de la personne à gâter et le budget suggéré. Si certains messages n'ont pas pu partir, le site vous indique pour quels prénoms. Pensez à prévenir vos participants de regarder leurs courriers indésirables.</p>
+  <p><strong>En « live » :</strong> chaque participant choisit son prénom dans la liste, révèle son résultat, puis le masque avant de passer la main. Quand tout le monde est passé, un écran de fin s'affiche.</p>
+  <p>Une question ? Elle a peut-être sa réponse dans la <a href="index.html#faq">foire aux questions</a>.</p>
+
+</section>
+
+<section class="page-cta">
+  <a href="index.html#form-section" class="btn btn-primary">Créer mon tirage</a>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <a class="logo" href="index.html">Mon<span>cadeau</span>mystère</a>
+    <div class="footer-links">
+      <a href="mentions.html">Mentions légales</a>
+      <a href="politique.html">Politique de confidentialité</a>
+      <a href="mailto:contact@moncadeaumystere.fr">Contact</a>
+    </div>
+  </div>
+  <div class="footer-rule"></div>
+  <div class="footer-bottom">
+    <span>Fait avec un peu d'amour et beaucoup de code.</span>
+    <span>© 2026 - Tous droits réservés</span>
+  </div>
+</footer>
+
+<script src="burger.js"></script>
+
+</body>
+</html>

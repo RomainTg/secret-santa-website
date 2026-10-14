@@ -9,6 +9,7 @@
     --gold:#C9A15A;
     --ink:#14231C;
     --ink-soft:#4A5B52;
+    interpolate-size: allow-keywords;
 }
 
 * {
@@ -143,6 +144,11 @@ nav {
     display:flex;
 }
 
+.burger:focus-visible {
+    outline: 2px solid var(--berry);
+    outline-offset: 2px;
+}
+
 .mobile-nav {
     position: absolute; 
     top: 100%; 
@@ -165,12 +171,15 @@ body.home-page .mobile-nav {
     max-height: 0; 
     overflow: hidden; 
     opacity: 0;
-    transition: max-height 0.25s ease, opacity 0.2s ease;
+    visibility: hidden;
+    transition: max-height 0.25s ease, opacity 0.2s ease visibility 0s linear 0.25s;
 }
 
 body.home-page header.open .mobile-nav {
     max-height: 260px;
     opacity: 1;
+    visibility: visible;
+    transition: max-height 0.25s ease, opacity 0.2s ease visibility 0s;
 }
 
 .mobile-nav a{
@@ -182,10 +191,6 @@ body.home-page header.open .mobile-nav {
 
 .mobile-nav a:last-child{border-bottom:none;}
 
-    .hero-inner{grid-template-columns:1.1fr 0.9fr;}
-    .hero h1{font-size:52px;}
-    .scene{height:340px;}
-    .path{grid-template-columns:repeat(3,1fr); gap:32px;}
 
  /* ---------- HERO ---------- */
 
@@ -251,12 +256,6 @@ body.home-page header.open .mobile-nav {
     background:var(--berry); 
     color:var(--snow);
 }
-  
-.btn-ghost {
-    background:transparent; 
-    color:var(--birch); 
-    border:1px solid rgba(250,249,245,0.3);
-}
  
 /* HERO SCENE */
   
@@ -298,19 +297,6 @@ body.home-page header.open .mobile-nav {
 @keyframes twinkle {
     0%,100% {opacity:.25;}
     50%{opacity:.9;}
-}
-
-.fly-img {
-    animation:fly 4.5s ease-in-out infinite;
-}
-
-@keyframes fly {
-    0%,100% {
-        transform:translate(-50%,-50%) translate(0,0) rotate(0deg);
-    }
-    50% {
-        transform:translate(-50%,-50%) translate(-6px,-10px) rotate(-1.5deg);
-    }
 }
 
 .moon {
@@ -780,20 +766,21 @@ body.home-page header.open .mobile-nav {
 }
 
 #budgetSuggestions {
-  display: flex;
-  gap: 0.5rem;
-  margin: 0.5rem 0 0.75rem;
+    font-family: inherit;
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0.75rem;
 }
 
 .suggestion-budget {
-  border: none;
-  background-color: #dfdedd;
-  color: #333;
-  border-radius: 999px;
-  padding: 0.4rem 0.9rem;
-  font-family: "SN Pro", sans-serif;
-  font-size: 0.85rem;
-  cursor: pointer;
+    border: none;
+    background-color: #dfdedd;
+    color: #333;
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
 }
 
 .remove-participant {
@@ -884,6 +871,75 @@ body.home-page header.open .mobile-nav {
 #confirm-send-btn {
     border: none;
     font-family:'Inter', sans-serif;
+}
+
+/* ---------- FAQ ---------- */
+
+.faq {
+    max-width: 1200px;
+    margin: 0 auto 96px;
+    padding: 0 7%;
+}
+
+.faq h2 {
+    font-size: 30px;
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.faq-item {
+    border-bottom: 1px solid #E4DDCB;
+    padding: 18px 0;
+}
+
+.faq-item summary {
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+    content: "+";
+    float: right;
+    color: var(--berry);
+    transition: transform 0.3s ease;
+}
+
+.faq-item[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.faq-item[open] p {
+    animation: faq-open 0.35s ease;
+}
+
+@keyframes faq-open {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.faq-item p {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 15px;
+}
+
+.faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.35s ease, content-visibility 0.35s ease allow-discrete;
+}
+
+.faq-item[open]::details-content {
+    block-size: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .faq-item[open] p { animation: none; }
+    .faq-item summary::after { transition: none; }
+    .faq-item::details-content { transition: none; }
 }
 
 
@@ -1115,133 +1171,77 @@ button {
     margin-bottom:16px;
 }
 
-/* ---------- PAGE MENTIONS LÉGALES---------- */
+/* ---------- PAGE GENERIC ---------- */
 
-.mentionBanner {
+.pageBanner {
     background:var(--pine);
     color:var(--birch);
     padding:56px 6% 48px;
     text-align:center;
 }
 
-.mentionBanner h1 {
+.pageBanner h1 {
     color:var(--snow);
     font-size:36px;
 }
 
-.mentionBanner p {
+.pageBanner p {
     color:#D7DFD9;
     margin-top:10px;
     font-size:15px;
 }
 
-.mentionContent {
+.pageContent {
     max-width:90%;
     margin:0 auto;
-    padding:64px 6% 96px;
+    padding:64px 6% 60px;
 }
 
-.mentionContent h2 {
+.pageContent h2 {
     font-size:22px;
     margin-top:40px;
     margin-bottom:14px;
 }
 
-.mentionContent h2:first-child {
+.pageContent h2:first-child {
     margin-top:0;
 }
 
-.mentionContent p {
+.pageContent p {
     color:var(--ink-soft);
     font-size:15px;
     margin-bottom:14px;
 }
 
-.mentionContent ul {
+.pageContent ul {
     color:var(--ink-soft);
     font-size:15px;
     margin:0 0 14px 20px;
 }
 
-.mentionContent li {
+.pageContent li {
     margin-bottom:8px;
 }
 
-.mentionContent a {
+.pageContent a {
     color:var(--berry);
     text-decoration:underline;
 }
 
-.mentionContent strong {
+.pageContent strong {
     color:var(--ink);
 }
 
-.legal-updated {
+.legal-updated, .policy-updated {
     font-size:13px;
     color:var(--ink-soft);
     margin-top:48px;
     font-style:italic;
 }
 
-/* -------------- PAGE POLITIQUE DE CONFIDENTIALITÉ -------------- */
-
-.policyBanner {
-    background:var(--pine);
-    color:var(--birch);
-    padding:56px 6% 48px;
-    text-align:center;
-}
-
-.policyBanner h1 {
-    color:var(--snow);
-    font-size:36px;
-}
-
-.policyBanner p {
-    color:#D7DFD9;
-    margin-top:10px;
-    font-size:15px;
-}
-
-.policyContent {
-    max-width:90%;
-    margin:0 auto;
-    padding:64px 6% 96px;
-}
-
-.policyContent h2 {
-    font-size:22px;
-    margin-top:40px;
-    margin-bottom:14px;
-}
-
-.policyContent h2:first-child {
-    margin-top:0;
-}
-
-.policyContent p {
-    color:var(--ink-soft);
-    font-size:15px;
-    margin-bottom:14px;
-}
-
-.policyContent ul {
-    color:var(--ink-soft);
-    font-size:15px;
-    margin:0 0 14px 20px;
-}
-
-.policyContent li {
-    margin-bottom:8px;
-}
-
-.policyContent a {
-    color:var(--berry);
-    text-decoration:underline;
-}
-
-.policyContent strong {
-    color:var(--ink);
+.page-cta {
+    text-align: center;
+    padding: 0 6% 60px;
 }
 
 
@@ -1392,8 +1392,6 @@ button {
 }
 
 
-
-
 /* TABLETTE LANDSCAPE */
 @media (min-width: 992px) {
 
@@ -1402,6 +1400,8 @@ nav {display:flex;}
 .burger {display:none;}
 
 .mobile-nav {display:none;}
+
+body.home-page .mobile-nav {display:none;}
 
 .hero {height:680px;}
 

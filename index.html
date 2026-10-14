@@ -40,21 +40,23 @@
 <body class="home-page">
 
 <header id="site-header">
-  <a class="logo" href="#">Mon<span>cadeau</span>mystère</a>
+  <a class="logo" href="index.html">Mon<span>cadeau</span>mystère</a>
   <nav>
-    <a href="#trail">Comment ça marche</a>
+    <a href="comment-ca-marche.html">Comment ça marche</a>
     <a href="#form-section">Créer un tirage</a>
-    <a href="#">Idées cadeaux</a>
-    <a href="#">Contact</a>
+    <!-- <a href="idees-cadeaux.html">Idées cadeaux</a> -->
+    <a href="#faq">FAQ</a>
   </nav>
-  <div class="burger" id="burger-btn" role="button" aria-label="Ouvrir le menu" aria-expanded="false">
-    <div class="bar"></div>
-  </div>
+
+  <button type="button" class="burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span class="bar"></span>
+  </button>
+
   <div class="mobile-nav" id="mobile-nav">
-    <a href="#trail">Comment ça marche</a>
+    <a href="comment-ca-marche.html">Comment ça marche</a>
     <a href="#form-section">Créer un tirage</a>
-    <a href="#">Idées cadeaux</a>
-    <a href="#">Contact</a>
+    <!-- <a href="idees-cadeaux.html">Idées cadeaux</a> -->
+    <a href="#faq">FAQ</a>
   </div>
 </header>
 
@@ -158,7 +160,7 @@
         <div class="field">
           <input type="text" id="group-budget" placeholder="Ex : 50">
         </div>
-        <div id="budgetSuggestions" hidden>
+        <div id="budgetSuggestions">
           <button type="button" class="suggestion-budget" data-value="5">5€</button>
           <button type="button" class="suggestion-budget" data-value="10">10€</button>
           <button type="button" class="suggestion-budget" data-value="15">15€</button>
@@ -239,6 +241,41 @@
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <h2>Foire aux questions</h2>
+
+  <details class="faq-item">
+  <summary>Quelle différence entre les tirages par e-mail et "live" ?</summary>
+  <p>Avec le tirage par e-mail, chaque participant reçoit dans sa boîte le prénom de la personne à gâter : idéal quand le groupe est dispersé. Avec le tirage « live », tout le monde est réuni devant le même écran : chacun choisit son prénom, découvre son résultat, le masque, puis passe la main au suivant. Dans ce mode, aucune adresse e-mail n'est nécessaire.</p>
+</details>
+
+<details class="faq-item">
+  <summary>L'organisateur peut-il voir qui a tiré qui ?</summary>
+  <p>Non. Pour le tirage par e-mail, les résultats ne sont jamais affichés à l'écran : chacun reçoit uniquement le sien. Pour le tirage « live », un résultat n'apparaît que le temps que son propriétaire le consulte, et il est masqué avant de passer au participant suivant.</p>
+</details>
+
+<details class="faq-item">
+  <summary>Comment fonctionnent les exclusions ?</summary>
+  <p>Sur la ligne d'un participant, choisissez dans « Exclusion » les personnes qu'il ne doit pas tirer (son conjoint, un colocataire...). Attention, une exclusion ne fonctionne que dans un sens : si Camille exclut Yanis, Yanis peut encore tirer Camille. Pour un couple, ajoutez donc l'exclusion des deux côtés. Le nombre total d'exclusions est limité selon la taille du groupe, afin de toujours garantir qu'un tirage valide existe. Et bien sûr, personne ne peut se tirer lui-même.</p>
+</details>
+
+<details class="faq-item">
+  <summary>Un participant n'a pas reçu son e-mail, que faire ?</summary>
+  <p>Demandez-lui d'abord de vérifier ses courriers indésirables (spams), où le message se glisse souvent. Vérifiez ensuite l'orthographe de son adresse. Si l'envoi a échoué pour certaines adresses, le site vous indique les prénoms concernés. Attention : relancer le tirage génère un nouveau tirage et renvoie un e-mail à tout le monde. Seul le dernier message reçu fait alors foi.</p>
+</details>
+
+<details class="faq-item">
+  <summary>Mes données sont-elles conservées ?</summary>
+  <p>Notre site ne conserve ni les prénoms, ni les adresses e-mail, ni le résultat du tirage. Pour un tirage par e-mail, notre prestataire d'envoi, Brevo, garde un historique technique des envois pendant 1 mois, puis le supprime automatiquement. Un tirage « live » n'envoie rien et ne transmet aucune donnée à un tiers. Tous les détails sont dans notre <a href="politique.html">politique de confidentialité</a>.</p>
+</details>
+
+<details class="faq-item">
+  <summary>Combien de participants peut-on ajouter, le service est-il gratuit ?</summary>
+  <p>Il faut au minimum 3 participants, et jusqu'à 50 au maximum. Vous pouvez les saisir un par un ou importer un fichier Excel (le modèle est téléchargeable dans le formulaire). Le service est entièrement gratuit et sans inscription.</p>
+</details>
+
+</section>
+
 <footer>
   <div class="footer-top">
     <a class="logo" href="#">Mon<span>cadeau</span>mystère</a>
@@ -279,7 +316,7 @@
     <div class="modal-actions">
       <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
       <button type="button" class="btn-close-modal" id="modal-close-btn" hidden>Fermer et corriger</button>
-      <a href="#" target="_blank" rel="noopener" class="modal-donate-link">Envie de soutenir le projet ? Faites un don</a>
+      <a href="https://ko-fi.com/moncadeaumystere" target="_blank" rel="noopener" class="modal-donate-link">Envie de soutenir notre projet ? Faites un don :)</a>
     </div>
   </div>
 </div>
@@ -316,13 +353,9 @@
       <a href="index.html" class="btn btn-primary">
         Retour à l'accueil
       </a>
-      <button type="button" class="btn-close-modal"
-              id="modal-close-btn" hidden>
-        Fermer et corriger
-      </button>
-      <a href="#" target="_blank" rel="noopener"
+      <a href="https://ko-fi.com/moncadeaumystere" target="_blank" rel="noopener"
          class="modal-donate-link">
-        Envie de soutenir le projet ? Faites un don
+        Envie de soutenir notre projet ? Faites un don :)
       </a>
     </div>
   </div>
