@@ -1,6 +1,14 @@
+const esc = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
 export default async (req) => {
   try {
     const { draw, participants, groupName, budget, antibot } = await req.json();
+
+    if (!participants || !Array.isArray(participants) || participants.length > 50) {
+      return new Response(JSON.stringify({ success: false, error: 'Le nombre maximum de participants est limité à 50.' }), { status: 400 });
+    }
 
     if (antibot && antibot.trim() !== '') {
       return new Response(JSON.stringify({ success: true, sent: 0, total: 0 }), { status: 200 });
@@ -28,7 +36,7 @@ export default async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        sender: { email: 'tangromain@yahoo.com', name: 'Mon cadeau mystère' },
+        sender: { email: process.env.SENDER_EMAIL, name: 'Mon cadeau mystère' },
         to: [{ email: giver.email, name: giverName }],
         subject: `🎁 Ton tirage pour : ${groupName}`,
         htmlContent: `
@@ -38,16 +46,16 @@ export default async (req) => {
             </p>
           </div>
           <div style="background:#FAF9F5; padding:32px 24px; border-radius:0 0 12px 12px; font-family:Arial, sans-serif; color:#14231C;">
-            <p style="font-size:16px; margin:0 0 16px;">Bonjour ${giverName},</p>
+            <p style="font-size:16px; margin:0 0 16px;">Bonjour ${esc(giverName)},</p>
             <p style="font-size:15px; line-height:1.6; margin:0 0 20px; color:#4A5B52;">
-              Le tirage au sort du groupe <strong>${groupName}</strong> a été réalisé. Tu dois offrir un cadeau à :
+              Le tirage au sort du groupe <strong>${esc(groupName)}</strong> a été réalisé. Tu dois offrir un cadeau à :
             </p>
             <div style="background:#C4432B; color:#FAF9F5; font-family:Georgia, serif; font-size:18px; text-align:center; padding:14px; border-radius:10px; margin:0 0 20px;">
-              ${receiverName}
+              ${esc(receiverName)}
             </div>
             <p style="font-size:14px; color:#4A5B52; margin:0 0 8px;">Budget suggéré :</p>
             <p style="display:inline-block; background:#F1EAD9; color:#14231C; font-size:14px; padding:6px 14px; border-radius:100px; margin:0 0 24px;">
-              ${budget}€
+              ${esc(budget)}€
             </p>
             <p style="font-size:13px; color:#4A5B52; line-height:1.6; margin:24px 0 0;">
               Chuuut, c'est un secret... 🤫

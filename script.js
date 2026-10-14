@@ -1,3 +1,6 @@
+const esc = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 const groupNameInput = document.getElementById('group-name-input');
 const budgetInput = document.getElementById('group-budget');
 const budgetSuggestionButtons = document.getElementById('budget-suggestions');
@@ -282,7 +285,7 @@ function addExclusionTag(row, name) {
   const tag = document.createElement('span');
   tag.className = 'exclusion-tag';
   tag.dataset.name = name;
-  tag.innerHTML = `${name} <button type="button" aria-label="Retirer ${name} des exclusions">×</button>`;
+  tag.innerHTML = `${esc(name)} <button type="button" aria-label="Retirer ${esc(name)} des exclusions">×</button>`;
 
   tag.querySelector('button').addEventListener('click', () => {
     tag.remove();
@@ -317,10 +320,10 @@ function createParticipantRow(name = '', email = '', exclusion = '', removable =
   row.className = 'participant-row';
   row.innerHTML = `
     <div class="field no-label">
-      <input type="text" class="participant-name" placeholder="Prénom" value="${name}">
+      <input type="text" class="participant-name" placeholder="Prénom" value="${esc(name)}">
     </div>
     <div class="field no-label participant-email-field">
-      <input type="email" class="participant-email" placeholder="email@exemple.com" value="${email}">
+      <input type="email" class="participant-email" placeholder="email@exemple.com" value="${esc(email)}">
     </div>
     <div class="field no-label">
       <div class="exclusion-field">
@@ -450,6 +453,11 @@ async function launchDraw() {
     }
   }
 
+  if (participants.length > 50) {
+    alert('Le nombre maximum de participants est limité à 50.');
+    return;
+  }
+
   if (participants.length < 3) {
     alert('Il faut au moins 3 participants pour lancer le tirage.');
     return;
@@ -459,6 +467,15 @@ async function launchDraw() {
   if (new Set(lowerNames).size !== lowerNames.length) {
     alert('Deux participants ont le même prénom : ajoutez une initiale pour les distinguer (ex. Marie L. et Marie D.).');
     return;
+  }
+
+  const knownNames = participants.map((p) => p.name);
+  for (const p of participants) {
+    const missing = p.exclusions.find((n) => !knownNames.includes(n));
+    if (missing) {
+      alert(`${p.name} a une exclusion sur « ${missing} », mais ce prénom n'existe plus (modifié ou supprimé). Retirez cette exclusion.`);
+      return;
+    }
   }
 
   const draw = computeDraw(participants);
@@ -512,20 +529,28 @@ async function launchDraw() {
   document.getElementById('confirm-view').hidden = true;
   document.getElementById('loading-view').hidden = false;
 
-try {
-    const response = await fetch('/.netlify/functions/send-emails', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        draw,
-        participants,
-        groupName: groupNameInput.value.trim(),
-        budget: budgetInput.value.trim(),
-        antibot: document.getElementById('antibot').value,
-      }),
-    });
+  try {
+      const response = await fetch('/.netlify/functions/send-emails', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          draw,
+          participants,
+          groupName: groupNameInput.value.trim(),
+          budget: budgetInput.value.trim(),
+          antibot: document.getElementById('antibot').value,
+        }),
+      });
 
     const result = await response.json();
+
+    if (!response.ok || result.total === undefined) {
+      confirmModal.hidden = true;
+      document.getElementById('confirm-view').hidden = false;
+      document.getElementById('loading-view').hidden = true;
+      alert("Le serveur a refusé l'envoi : vérifiez les adresses email (ex. camille@gmail.com) et réessayez.");
+      return;
+    }
 
     if (result.sent === result.total) {
       modalTitle.textContent = '🎉 Tirage réalisé !';
@@ -564,7 +589,7 @@ try {
       launchDrawBtn.disabled = false;
       launchDrawBtn.textContent = originalText;
     }
-}
+  }
 
 showStep(1);
 
