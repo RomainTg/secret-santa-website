@@ -1,0 +1,33 @@
+[
+
+{
+  "id": "mug-isotherme",
+  "title": "Mug isotherme",
+  "hook": "Garde le café chaud pendant des heures",
+  "category": "cuisine",
+  "budget": 2,
+  "description": "Une idée pour celui qui laisse toujours refroidir son café. À offrir à un collègue ou un proche qui voyage souvent.",
+  "url": "https://www.amazon.fr/dp/XXXXXXXXXX?tag=ton-id-21"
+},
+
+{
+  "id": "tasse-antiderapante",
+  "title": "Tasse antidérapante",
+  "hook": "Garde un café en sécurité sur toutes les surfaces",
+  "category": "maison",
+  "budget": 2,
+  "description": "Une idée pour celui qui renverse toujours son café.",
+  "url": "https://www.amazon.fr/dp/XXXXXXXXXX?tag=ton-id-22"
+},
+
+{
+  "id": "pantoufles-chaudes",
+  "title": "Pantoufles chaudes",
+  "hook": "Reste au chaud même en hiver",
+  "category": "maison",
+  "budget": 2,
+  "description": "Une idée pour celui qui aime rester au chaud même en hiver.",
+  "url": "https://www.amazon.fr/dp/XXXXXXXXXX?tag=ton-id-23"
+}
+
+]

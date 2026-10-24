@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Idées cadeaux — Mon cadeau mystère</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Des idées de cadeaux classées par budget et par catégorie pour votre Secret Santa : high-tech, gourmandise, maison, cuisine, bureau, auto, déco.">
+<link rel="icon" type="image/png" href="assets/images/favicon.png">
+<link rel="apple-touch-icon" href="assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="canonical" href="https://moncadeaumystere.fr/idees-cadeaux.html">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="site-header">
+  <a class="logo" href="index.html">Mon<span>cadeau</span>mystère</a>
+  <nav>
+    <a href="comment-ca-marche.html">Comment ça marche</a>
+    <a href="index.html#form-section">Créer un tirage</a>
+    <a href="idees-cadeaux.html">Idées cadeaux</a>
+    <a href="index.html#faq">FAQ</a>
+  </nav>
+
+  <button type="button" class="burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span class="bar"></span>
+  </button>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="comment-ca-marche.html">Comment ça marche</a>
+    <a href="index.html#form-section">Créer un tirage</a>
+    <a href="idees-cadeaux.html">Idées cadeaux</a>
+    <a href="index.html#faq">FAQ</a>
+  </div>
+</header>
+
+<section class="pageBanner">
+  <h1>Idées cadeaux</h1>
+  <p>Un coup de pouce pour trouver LE cadeau, selon votre budget.</p>
+</section>
+
+<section class="gifts">
+  <p class="affiliate-note">En tant que Partenaire Amazon, je réalise un bénéfice sur les achats remplissant les conditions requises.</p>
+
+  <div class="gift-filters">
+    <label for="gift-search" class="sr-only">Rechercher une idée</label>
+    <input type="search" id="gift-search" placeholder="Rechercher une idée…">
+
+    <div class="chip-group" role="group" aria-label="Filtrer par budget" id="budget-filters"></div>
+    <div class="chip-group" role="group" aria-label="Filtrer par catégorie" id="category-filters"></div>
+  </div>
+
+  <p id="gift-count" aria-live="polite"></p>
+  <div id="gift-list"></div>
+  <p id="gift-empty" hidden>Aucune idée ne correspond à votre recherche.</p>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <a class="logo" href="index.html">Mon<span>cadeau</span>mystère</a>
+    <div class="footer-links">
+      <a href="mentions.html">Mentions légales</a>
+      <a href="politique.html">Politique de confidentialité</a>
+      <a href="mailto:contact@moncadeaumystere.fr">Contact</a>
+    </div>
+  </div>
+  <div class="footer-rule"></div>
+  <div class="footer-bottom">
+    <span>Site réalisé avec beaucoup d'amour et un soupçon de code :)</span>
+    <span>© 2026 - Tous droits réservés</span>
+  </div>
+</footer>
+
+<script src="burger.js"></script>
+<script src="gifts.js"></script>
+
+</body>
+</html>
