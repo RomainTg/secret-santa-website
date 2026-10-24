@@ -40,6 +40,7 @@ export default async (req) => {
         to: [{ email: giver.email, name: giverName }],
         subject: `🎁 Ton tirage pour : ${groupName}`,
         htmlContent: `
+        <div style="max-width:560px; margin:0 auto;">
           <div style="background:#FAF9F5; padding:32px 24px; text-align:center; border-radius:12px 12px 0 0; border-bottom:1px solid #E4DDCB;">
             <p style="margin:0; font-family:Georgia, serif; font-size:22px;">
               <span style="color:#122720; font-weight:bold;">Mon</span><span style="color:#C4432B; font-weight:bold;">cadeau</span><span style="color:#122720; font-weight:bold;">mystère</span>
@@ -50,8 +51,10 @@ export default async (req) => {
             <p style="font-size:15px; line-height:1.6; margin:0 0 20px; color:#4A5B52;">
               Le tirage au sort du groupe <strong>${esc(groupName)}</strong> a été réalisé. Tu dois offrir un cadeau à :
             </p>
-            <div style="background:#C4432B; color:#FAF9F5; font-family:Georgia, serif; font-size:18px; text-align:center; padding:14px; border-radius:10px; margin:0 0 20px;">
-              ${esc(receiverName)}
+            <div style="text-align:center; margin:0 0 20px;">
+              <span style="display:inline-block; background:#C4432B; color:#FAF9F5; font-family:Georgia, serif; font-size:18px; padding:14px 32px; border-radius:10px;">
+                ${esc(receiverName)}
+              </span>
             </div>
             <p style="font-size:14px; color:#4A5B52; margin:0 0 8px;">Budget suggéré :</p>
             <p style="display:inline-block; background:#F1EAD9; color:#14231C; font-size:14px; padding:6px 14px; border-radius:100px; margin:0 0 24px;">
@@ -61,6 +64,7 @@ export default async (req) => {
               Chuuut, c'est un secret... 🤫
             </p>
           </div>
+        </div>
         `,
         textContent: `Bonjour ${giverName},\n\nLe tirage au sort du groupe ${groupName} a été réalisé. Tu dois offrir un cadeau à : ${receiverName}\n\nBudget suggéré : ${budget}€\n\nChuuut, c'est un secret... 🤫`,
       }),
