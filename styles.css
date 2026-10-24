@@ -1436,6 +1436,71 @@ button {
 }
 
 
+/* ---------- CONTACT ---------- */
+
+.contact {
+    max-width:950px;
+    margin:0 auto;
+    padding:48px 10% 80px;
+}
+
+.contact .field {
+    margin-bottom:20px;
+}
+
+.field textarea {
+    width:100%;
+    padding:13px 16px;
+    border-radius:10px;
+    border:1px solid #E3DFD4;
+    font-family:'Inter', sans-serif;
+    font-size:15px;
+    background:#FDFCFA;
+    color:var(--ink);
+    resize:vertical;
+    min-height:140px;
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible {
+    outline:2px solid var(--berry);
+    outline-offset:2px;
+}
+
+#contact-form .btn {
+    width:100%;
+    justify-content:center;
+    border:none;
+}
+
+#contact-form .btn:disabled {
+    opacity:0.6;
+    cursor:not-allowed;
+}
+
+#contact-status {
+    margin-top:16px;
+    font-size:15px;
+    text-align:center;
+    min-height:1.5em;
+}
+
+#contact-status.is-success { color:var(--pine); }
+#contact-status.is-error   { color:var(--berry); }
+
+.contact-note {
+    margin-top:24px;
+    font-size:13px;
+    color:var(--ink-soft);
+    text-align:center;
+}
+
+.contact-note a {
+    color:var(--berry);
+    text-decoration:underline;
+}
+
+
 /* GRAND MOBILE */
 @media (min-width: 481px) {
 
