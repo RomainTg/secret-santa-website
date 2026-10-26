@@ -1260,6 +1260,9 @@ button {
     max-width:1200px;
     margin:0 auto;
     padding:48px 6% 80px;
+    text-align:center;
+    font-style:italic;
+    min-height:45vh;
 }
 
 .affiliate-note {
