@@ -1,5 +1,11 @@
 // Convertit le chiffre du budget (dans gifts.json) en texte affiché
-const BUDGET_LABELS = { 1: '€', 2: '€€', 3: '€€€' };
+const BUDGET_LABELS = {
+  1: "Jusqu'à 10 €",
+  2: '10 à 15 €',
+  3: '15 à 20 €',
+  4: '20 à 30 €',
+  5: '30 € et plus'
+};
 
 // Convertit la clé de catégorie (sans accent, en minuscules) en texte affiché
 const CATEGORY_LABELS = {
@@ -74,8 +80,12 @@ function createGiftItem(gift) {
   link.target = '_blank';                         // ouvre dans un nouvel onglet
   link.rel = 'sponsored noopener noreferrer';     // lien affilié + sécurité du nouvel onglet
 
-  // On range dans le corps : ta description, le bouton, la mention
-  body.append(el('p', '', gift.description), link, el('small', 'gift-note', 'Lien affilié'));
+    // Le bouton et la mention partagent un conteneur, pour centrer la mention sous le bouton
+  const actions = el('div', 'gift-actions');
+  actions.append(link, el('small', 'gift-note', 'Lien affilié'));
+
+  // On range dans le corps : ta description, puis le conteneur bouton + mention
+  body.append(el('p', '', gift.description), actions);
 
   // On assemble : le <details> contient le summary puis le corps
   item.append(summary, body);

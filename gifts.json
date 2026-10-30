@@ -1,33 +1,254 @@
 [
-
-{
-  "id": "mug-isotherme",
-  "title": "Mug isotherme",
-  "hook": "Garde le café chaud pendant des heures",
-  "category": "cuisine",
-  "budget": 2,
-  "description": "Une idée pour celui qui laisse toujours refroidir son café. À offrir à un collègue ou un proche qui voyage souvent.",
-  "url": "https://www.amazon.fr/dp/XXXXXXXXXX?tag=ton-id-21"
-},
-
-{
-  "id": "tasse-antiderapante",
-  "title": "Tasse antidérapante",
-  "hook": "Garde un café en sécurité sur toutes les surfaces",
-  "category": "maison",
-  "budget": 2,
-  "description": "Une idée pour celui qui renverse toujours son café.",
-  "url": "https://www.amazon.fr/dp/XXXXXXXXXX?tag=ton-id-22"
-},
-
-{
-  "id": "pantoufles-chaudes",
-  "title": "Pantoufles chaudes",
-  "hook": "Reste au chaud même en hiver",
-  "category": "maison",
-  "budget": 2,
-  "description": "Une idée pour celui qui aime rester au chaud même en hiver.",
-  "url": "https://www.amazon.fr/dp/XXXXXXXXXX?tag=ton-id-23"
-}
-
+  {
+    "id": "support-telephone-pliable-ugreen",
+    "title": "Support de téléphone pliable UGREEN",
+    "hook": "Pose ton téléphone à la bonne hauteur",
+    "category": "high-tech",
+    "budget": 1,
+    "description": "Une idée pour celui qui regarde des vidéos ou enchaîne les visios au bureau. Support UGREEN pliable et réglable.",
+    "url": "https://link.amazon/B01n7EnM2"
+  },
+  {
+    "id": "cable-charge-3-en-2",
+    "title": "Câble de charge 3 en 2",
+    "hook": "Un seul câble pour tout recharger",
+    "category": "high-tech",
+    "budget": 1,
+    "description": "Une idée pour celui qui jongle entre plusieurs appareils. Câble de 1,2 m pour recharger en USB-C, en Lightning et une Apple Watch.",
+    "url": "https://link.amazon/B0cc235r6"
+  },
+  {
+    "id": "lampe-led-usb-flexible",
+    "title": "Lampe LED USB flexible",
+    "hook": "Un éclairage d'appoint qui se branche en USB",
+    "category": "high-tech",
+    "budget": 2,
+    "description": "Une idée pour celui qui lit tard ou travaille dans un coin sombre. Lampe LED portable à bras flexible, avec 8 LED.",
+    "url": "https://link.amazon/B0cPMvOt1"
+  },
+  {
+    "id": "enceinte-bluetooth-xiaomi-sound-pocket",
+    "title": "Enceinte Bluetooth Xiaomi Sound Pocket",
+    "hook": "Petite, résistante, elle suit partout",
+    "category": "high-tech",
+    "budget": 3,
+    "description": "Une idée pour celui qui aime la musique en voyage ou en plein air. Mini enceinte Bluetooth Xiaomi de 5 W, résistante à l'eau et à la poussière (IP67), avec environ 10 heures d'autonomie.",
+    "url": "https://link.amazon/B07ZlRrOA"
+  },
+  {
+    "id": "lindt-lindor-ruban-festif",
+    "title": "Lindt Lindor, édition ruban festif",
+    "hook": "Des chocolats au cœur fondant",
+    "category": "gourmandise",
+    "budget": 1,
+    "description": "Une idée pour les gourmands de chocolat. Assortiment Lindt Lindor de chocolats au lait, blancs, double chocolat et pistache.",
+    "url": "https://link.amazon/B01wo9vz2"
+  },
+  {
+    "id": "coffret-75-sachets-tisanes-thes",
+    "title": "Coffret découverte de tisanes et de thés",
+    "hook": "Assez de sachets pour toute la saison",
+    "category": "gourmandise",
+    "budget": 3,
+    "description": "Une idée pour celui qui aime les boissons chaudes. Coffret de Noël de 75 sachets : 12 tisanes et 3 thés.",
+    "url": "https://link.amazon/B04LYItG6"
+  },
+  {
+    "id": "lindt-champs-elysees",
+    "title": "Lindt Champs-Élysées, boîte assortie",
+    "hook": "Un assortiment pour les amateurs de pralinés",
+    "category": "gourmandise",
+    "budget": 3,
+    "description": "Une idée pour offrir une belle boîte à partager. Lindt Champs-Élysées, édition Avenue en fête : chocolats au lait, noirs et blancs.",
+    "url": "https://link.amazon/B0332Qskr"
+  },
+  {
+    "id": "coffret-4-sels-herbes-epices",
+    "title": "Coffret de 4 sels aux herbes et épices",
+    "hook": "Pour relever les plats avec des herbes et des épices",
+    "category": "gourmandise",
+    "budget": 2,
+    "description": "Une idée pour celui qui aime cuisiner. Coffret de 4 sels de 80 g : paprika fumé ; carvi, piment et poivre du Sichuan ; curcuma, moutarde et curry ; origan, romarin et estragon.",
+    "url": "https://link.amazon/B07smxkmR"
+  },
+  {
+    "id": "coffret-3-huiles-infusees",
+    "title": "Coffret de 3 huiles infusées",
+    "hook": "Trois huiles pour parfumer ses plats",
+    "category": "gourmandise",
+    "budget": 2,
+    "description": "Une idée pour celui qui aime cuisiner. Lot de 3 huiles infusées de 250 ml : basilic, ail, thym et romarin.",
+    "url": "https://link.amazon/B070zaa8T"
+  },
+  {
+    "id": "chaussettes-pilou-femme",
+    "title": "Chaussettes chaudes en pilou",
+    "hook": "Des pieds au chaud tout l'hiver",
+    "category": "maison",
+    "budget": 2,
+    "description": "Une idée pour celle qui a toujours froid aux pieds. Chaussettes en pilou épaisses et thermiques, pour femme.",
+    "url": "https://link.amazon/B0elvSjb1"
+  },
+  {
+    "id": "bouillotte-housse-poche-kangourou",
+    "title": "Bouillotte avec housse et poche kangourou",
+    "hook": "Une chaleur douce pour les soirées d'hiver",
+    "category": "maison",
+    "budget": 2,
+    "description": "Une idée pour celui qui craint le froid. Bouillotte étanche avec housse grise et poche kangourou.",
+    "url": "https://link.amazon/B0ezsp9mi"
+  },
+  {
+    "id": "yankee-candle-cookie-de-noel",
+    "title": "Bougie Yankee Candle, Cookie de Noël",
+    "hook": "Le parfum des biscuits de Noël",
+    "category": "maison",
+    "budget": 3,
+    "description": "Une idée pour installer une ambiance de fêtes à la maison. Bougie parfumée en grand pot, jusqu'à 150 heures de combustion.",
+    "url": "https://link.amazon/B09rVOmQw"
+  },
+  {
+    "id": "yankee-candle-coton-fraichement-lave",
+    "title": "Bougie Yankee Candle, Coton fraîchement lavé",
+    "hook": "Une odeur de linge propre dans toute la maison",
+    "category": "maison",
+    "budget": 3,
+    "description": "Une idée pour celui qui aime une maison qui sent bon. Bougie parfumée en grand pot, jusqu'à 150 heures de combustion.",
+    "url": "https://link.amazon/B02lXGylq"
+  },
+  {
+    "id": "diffuseur-huiles-essentielles-100ml",
+    "title": "Diffuseur d'huiles essentielles 100 ml",
+    "hook": "Un parfum d'ambiance pour toute la pièce",
+    "category": "maison",
+    "budget": 3,
+    "description": "Une idée pour parfumer la maison avec ses huiles essentielles préférées. Diffuseur de 100 ml avec 8 LED.",
+    "url": "https://link.amazon/B0iES8jgQ"
+  },
+  {
+    "id": "plaid-150x200",
+    "title": "Plaid gris 150 × 200 cm",
+    "hook": "Pour les soirées sous la couverture",
+    "category": "maison",
+    "budget": 3,
+    "description": "Une idée pour celui qui aime se blottir sur le canapé ou dans son lit. Plaid gris pour un lit une place, 150 × 200 cm.",
+    "url": "https://link.amazon/B06TBq5Zg"
+  },
+  {
+    "id": "rasoir-anti-bouloches-philips",
+    "title": "Rasoir anti-bouloches Philips",
+    "hook": "Il redonne vie aux pulls bouloché",
+    "category": "maison",
+    "budget": 3,
+    "description": "Une idée pour celui qui aime garder ses pulls comme neufs. Rasoir anti-bouloches Philips à 3 lames, pour tous les tissus.",
+    "url": "https://link.amazon/B0aODgeiC"
+  },
+  {
+    "id": "tablier-cuisine-etanche-3-poches",
+    "title": "Tablier de cuisine étanche à 3 poches",
+    "hook": "Un tablier qui résiste aux éclaboussures",
+    "category": "cuisine",
+    "budget": 1,
+    "description": "Une idée pour celui qui cuisine beaucoup. Tablier étanche à lanières réglables et 3 poches, pour homme comme pour femme.",
+    "url": "https://link.amazon/B07QChBve"
+  },
+  {
+    "id": "set-2-moulins-poivre-sel",
+    "title": "Set de 2 moulins à poivre et à sel",
+    "hook": "Poivre et sel fraîchement moulus",
+    "category": "cuisine",
+    "budget": 2,
+    "description": "Une idée pour celui qui aime assaisonner au dernier moment. Deux moulins manuels en acier inoxydable, avec meule en céramique réglable.",
+    "url": "https://link.amazon/B0dthQPZ9"
+  },
+  {
+    "id": "mug-isotherme-350ml",
+    "title": "Mug isotherme en acier inoxydable, 350 ml",
+    "hook": "Garde le café chaud pendant des heures",
+    "category": "cuisine",
+    "budget": 3,
+    "description": "Une idée pour celui qui laisse toujours refroidir son café. Mug isotherme de 350 ml à double paroi, en acier inoxydable.",
+    "url": "https://link.amazon/B04UVxPS9"
+  },
+  {
+    "id": "carnet-a5-carreaux",
+    "title": "Carnet A5 à carreaux, couverture rigide",
+    "hook": "Un carnet pour tout noter",
+    "category": "bureau",
+    "budget": 2,
+    "description": "Une idée pour celui qui prend des notes ou planifie ses journées. Carnet A5 de 180 pages à carreaux, avec couverture rigide.",
+    "url": "https://link.amazon/B01y4ALOk"
+  },
+  {
+    "id": "pot-crayons-style-nordique",
+    "title": "Pot à crayons style nordique",
+    "hook": "Un rangement étanche et décoratif",
+    "category": "bureau",
+    "budget": 2,
+    "description": "Une idée pour ranger stylos ou pinceaux de maquillage sur son bureau. Pot à crayons en silicone étanche, de style nordique.",
+    "url": "https://link.amazon/B0dJnpDpj"
+  },
+  {
+    "id": "porte-stylos-cactus-legami",
+    "title": "Porte-stylos cactus en céramique",
+    "hook": "Un cactus pour ranger ses stylos",
+    "category": "bureau",
+    "budget": 2,
+    "description": "Une idée pour égayer un bureau. Porte-stylos en céramique peint à la main, collection Desk Friends de Legami.",
+    "url": "https://link.amazon/B01W3AgPc"
+  },
+  {
+    "id": "organiseur-bureau-metal",
+    "title": "Organiseur de bureau en métal",
+    "hook": "Tout le bureau bien rangé",
+    "category": "bureau",
+    "budget": 1,
+    "description": "Une idée pour celui qui veut un bureau plus net. Pot à crayons en métal avec porte-notes en maille, 103 × 154 × 103 mm.",
+    "url": "https://link.amazon/B01GsStoL"
+  },
+  {
+    "id": "post-it-super-sticky-6-blocs",
+    "title": "Post-it Super Sticky, 6 blocs",
+    "hook": "Des notes qui tiennent bien en place",
+    "category": "bureau",
+    "budget": 1,
+    "description": "Une idée pour celui qui laisse des pense-bêtes partout. 6 blocs de 540 feuilles au total, format 76 × 76 mm.",
+    "url": "https://link.amazon/B0ccYLzeJ"
+  },
+  {
+    "id": "repose-poignet-ergonomique",
+    "title": "Repose-poignet ergonomique pour clavier",
+    "hook": "Pour taper plus confortablement",
+    "category": "bureau",
+    "budget": 3,
+    "description": "Une idée pour celui qui passe ses journées devant l'ordinateur. Repose-poignet en mousse à mémoire de forme pour clavier et souris, avec base antidérapante.",
+    "url": "https://link.amazon/B0ghqiEzO"
+  },
+  {
+    "id": "desodorisant-voiture-homme",
+    "title": "Désodorisant de voiture pour homme",
+    "hook": "Un parfum pour l'habitacle",
+    "category": "auto",
+    "budget": 2,
+    "description": "Une idée pour celui qui passe du temps en voiture. Diffuseur de parfum pour voiture, pour homme.",
+    "url": "https://link.amazon/B0e1SvuCU"
+  },
+  {
+    "id": "cadre-photo-a3-bois",
+    "title": "Cadre photo A3 en bois",
+    "hook": "Pour encadrer une affiche ou un diplôme",
+    "category": "deco",
+    "budget": 2,
+    "description": "Une idée pour mettre en valeur une affiche, une photo ou un diplôme. Cadre A3 (29,7 × 42 cm) en bois noir avec face en acrylique.",
+    "url": "https://link.amazon/B05XhD5Xc"
+  },
+  {
+  "id": "batterie-externe-ugreen-20000",
+  "title": "Batterie externe UGREEN 20 000 mAh",
+  "hook": "De quoi recharger plusieurs fois son téléphone",
+  "category": "high-tech",
+  "budget": 5,
+  "description": "Une idée pour celui qui est toujours en déplacement. Batterie externe de 20 000 mAh avec charge rapide PD jusqu'à 45 W.",
+  "url": "https://link.amazon/B0dGQdq2h"
+  }
 ]
